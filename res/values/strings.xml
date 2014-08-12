@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Smarty Alarm</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_alarms">AlarmsActivity</string>
+    <string name="no_alarms">You have no alarms. Click the add an alarm icon in the upper right corner of the screen! :)</string>
+    <string name="title_activity_alarm_details">AlarmDetailsActivity</string>
+    <string name="hello_world">Hello world!</string>
+
+</resources>
