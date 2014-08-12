@@ -7,5 +7,19 @@
     <string name="no_alarms">You have no alarms. Click the add an alarm icon in the upper right corner of the screen! :)</string>
     <string name="title_activity_alarm_details">AlarmDetailsActivity</string>
     <string name="hello_world">Hello world!</string>
+    
+    <!-- Add Alarm -->
+    
+    <string name="details_alarm_name">Alarm Name</string>
+    <string name="details_repeat_weekly">Repeat Weekly</string>
+    <string name="details_sunday">Sunday</string>
+    <string name="details_monday">Monday</string>
+    <string name="details_tuesday">Tuesday</string>
+    <string name="details_wednesday">Wednesday</string>
+    <string name="details_thursday">Thursday</string>
+    <string name="details_friday">Friday</string>
+    <string name="details_saturday">Saturday</string>
+    <string name="details_alarm_tone">Alarm Tone</string>
+    <string name="details_alarm_tone_default">Select an alarm tone</string>
 
 </resources>

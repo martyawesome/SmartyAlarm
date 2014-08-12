@@ -14,15 +14,15 @@ public class AlarmsActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarms);
-		
-		//TextView emptyTextView = (TextView) getListView().getEmptyView();
-		//emptyTextView.setText(getString(R.string.no_alarms));
+
+		// TextView emptyTextView = (TextView) getListView().getEmptyView();
+		// emptyTextView.setText(getString(R.string.no_alarms));
 
 	}
-	
+
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);		
+		super.onListItemClick(l, v, position, id);
 	}
 
 	@Override
@@ -38,11 +38,13 @@ public class AlarmsActivity extends ListActivity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.add_alarm) {
-			Intent intent = new Intent(AlarmsActivity.this, AlarmDetailsActivity.class);
+		switch (item.getItemId()) {
+		case R.id.add_alarm: {
+			Intent intent = new Intent(this, AlarmDetailsActivity.class);
+
 			startActivity(intent);
-			return true;
+			break;
+		}
 		}
 		return super.onOptionsItemSelected(item);
 	}
