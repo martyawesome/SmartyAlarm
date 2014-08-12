@@ -31,5 +31,6 @@ public class Alarm {
 	public boolean getRepeatingDay(int dayOfWeek){
 		return repeatingDays[dayOfWeek];
 	}
+	
 
 }

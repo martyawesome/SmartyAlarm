@@ -16,7 +16,17 @@ import android.widget.TimePicker;
 
 public class AlarmDetailsActivity extends Activity {
 
-	private Alarm alarm;
+	private Alarm mAlarm;
+	TimePicker mTimePicker;
+	EditText mAlarmName;
+	CheckBox mCheckBoxWeekly;
+	CheckBox mCheckBoxSunday;
+	CheckBox mCheckBoxMonday;
+	CheckBox mCheckBoxTuesday;
+	CheckBox mCheckBoxWednesday;
+	CheckBox mCheckBoxThursday;
+	CheckBox mCheckBoxFriday;
+	CheckBox mCheckBoxSaturday;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +35,17 @@ public class AlarmDetailsActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.add_alarm);
 
+		mTimePicker = (TimePicker) findViewById(R.id.alarm_details_time_picker);
+		mAlarmName = (EditText) findViewById(R.id.alarm_details_name);
+		mCheckBoxWeekly = (CheckBox) findViewById(R.id.alarm_details_repeat_weekly);
+		mCheckBoxSunday = (CheckBox) findViewById(R.id.alarm_details_repeat_sunday);
+		mCheckBoxMonday = (CheckBox) findViewById(R.id.alarm_details_repeat_monday);
+		mCheckBoxTuesday = (CheckBox) findViewById(R.id.alarm_details_repeat_tuesday);
+		mCheckBoxWednesday = (CheckBox) findViewById(R.id.alarm_details_repeat_wednesday);
+		mCheckBoxThursday = (CheckBox) findViewById(R.id.alarm_details_repeat_thursday);
+		mCheckBoxFriday = (CheckBox) findViewById(R.id.alarm_details_repeat_friday);
+		mCheckBoxSaturday = (CheckBox) findViewById(R.id.alarm_details_repeat_saturday);
+		
 		final LinearLayout ringToneContainer = (LinearLayout) findViewById(R.id.alarm_ringtone_container);
 		ringToneContainer.setOnClickListener(new OnClickListener() {
 
@@ -36,7 +57,7 @@ public class AlarmDetailsActivity extends Activity {
 			}
 		});
 
-		alarm = new Alarm();
+		mAlarm = new Alarm();
 
 	}
 
@@ -54,7 +75,7 @@ public class AlarmDetailsActivity extends Activity {
 			break;
 		}
 		case R.id.action_save_alarm_details: {
-			updateModelFromLayout();
+			newAlarmValues();
 			finish();
 		}
 		}
@@ -68,12 +89,12 @@ public class AlarmDetailsActivity extends Activity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case 1: {
-				alarm.alarmTone = data
+				mAlarm.alarmTone = data
 						.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
 
 				TextView txtToneSelection = (TextView) findViewById(R.id.alarm_label_tone_selection);
 				txtToneSelection.setText(RingtoneManager.getRingtone(this,
-						alarm.alarmTone).getTitle(this));
+						mAlarm.alarmTone).getTitle(this));
 				break;
 			}
 			default: {
@@ -83,43 +104,18 @@ public class AlarmDetailsActivity extends Activity {
 		}
 	}
 
-	private void updateModelFromLayout() {
-
-		TimePicker timePicker = (TimePicker) findViewById(R.id.alarm_details_time_picker);
-		alarm.timeMinute = timePicker.getCurrentMinute().intValue();
-		alarm.timeHour = timePicker.getCurrentHour().intValue();
-
-		EditText edtName = (EditText) findViewById(R.id.alarm_details_name);
-		alarm.name = edtName.getText().toString();
-
-		CheckBox chkWeekly = (CheckBox) findViewById(R.id.alarm_details_repeat_weekly);
-		alarm.repeatWeekly = chkWeekly.isChecked();
-
-		CheckBox chkSunday = (CheckBox) findViewById(R.id.alarm_details_repeat_sunday);
-		alarm.setRepeatingDay(Alarm.SUNDAY, chkSunday.isChecked());
-
-		CheckBox chkMonday = (CheckBox) findViewById(R.id.alarm_details_repeat_monday);
-		alarm.setRepeatingDay(Alarm.MONDAY, chkMonday.isChecked());
-
-		CheckBox chkTuesday = (CheckBox) findViewById(R.id.alarm_details_repeat_tuesday);
-		alarm
-				.setRepeatingDay(Alarm.TUESDAY, chkTuesday.isChecked());
-
-		CheckBox chkWednesday = (CheckBox) findViewById(R.id.alarm_details_repeat_wednesday);
-		alarm.setRepeatingDay(Alarm.WEDNESDAY,
-				chkWednesday.isChecked());
-
-		CheckBox chkThursday = (CheckBox) findViewById(R.id.alarm_details_repeat_thursday);
-		alarm.setRepeatingDay(Alarm.THURSDAY,
-				chkThursday.isChecked());
-
-		CheckBox chkFriday = (CheckBox) findViewById(R.id.alarm_details_repeat_friday);
-		alarm.setRepeatingDay(Alarm.FRIDAY, chkFriday.isChecked());
-
-		CheckBox chkSaturday = (CheckBox) findViewById(R.id.alarm_details_repeat_saturday);
-		alarm.setRepeatingDay(Alarm.SATURDAY,
-				chkSaturday.isChecked());
-
-		alarm.isEnabled = true;
+	private void newAlarmValues() {		
+		mAlarm.timeMinute = mTimePicker.getCurrentMinute().intValue();
+		mAlarm.timeHour = mTimePicker.getCurrentHour().intValue();
+		mAlarm.name = mAlarmName.getText().toString();
+		mAlarm.repeatWeekly = mCheckBoxWeekly.isChecked();
+		mAlarm.setRepeatingDay(Alarm.SUNDAY, mCheckBoxSunday.isChecked());
+		mAlarm.setRepeatingDay(Alarm.MONDAY, mCheckBoxMonday.isChecked());
+		mAlarm.setRepeatingDay(Alarm.TUESDAY, mCheckBoxTuesday.isChecked());
+		mAlarm.setRepeatingDay(Alarm.WEDNESDAY, mCheckBoxWednesday.isChecked());
+		mAlarm.setRepeatingDay(Alarm.THURSDAY, mCheckBoxThursday.isChecked());
+		mAlarm.setRepeatingDay(Alarm.FRIDAY, mCheckBoxFriday.isChecked());
+		mAlarm.setRepeatingDay(Alarm.SATURDAY, mCheckBoxSaturday.isChecked());
+		mAlarm.isEnabled = true;
 	}
 }
