@@ -2,28 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background" >
+    android:background="@drawable/background"
+    android:padding="@dimen/activity_horizontal_margin" >
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="@android:color/white"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:isScrollContainer="true" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="16dp"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:background="@android:color/white"
             tools:context=".AlarmDetailsActivity" >
 
             <TimePicker
                 android:id="@+id/alarm_details_time_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
@@ -43,166 +40,97 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/alarm_details_name" />
 
-            <TextView
-                android:id="@+id/alarm_details_label_repeat_weekly"
+            <com.martyawesome.smartyalarm.CustomSwitch
+                android:id="@+id/alarm_details_repeat_weekly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
                 android:layout_below="@+id/divider2"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="@string/details_repeat_weekly"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:checked="true"
+                android:text="@string/details_repeat_weekly" />
 
             <View
                 android:id="@+id/divider1"
                 style="@style/Divider"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/alarm_details_label_repeat_weekly" />
+                android:layout_below="@+id/alarm_details_repeat_weekly" />
 
-            <CheckBox
-                android:id="@+id/alarm_details_repeat_weekly"
+            <com.martyawesome.smartyalarm.CustomSwitch
+                android:id="@+id/alarm_details_repeat_sunday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/alarm_details_label_repeat_weekly"
-                android:layout_alignBottom="@+id/alarm_details_label_repeat_weekly"
-                android:layout_alignRight="@+id/divider1"
-                android:checked="true"
-                android:scaleX="1.50"
-                android:scaleY="1.50" />
-
-            <TextView
-                android:id="@+id/alarm_details_label_sunday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/divider1"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
                 android:layout_below="@+id/divider1"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:checked="true"
                 android:text="@string/details_sunday" />
 
-            <TextView
-                android:id="@+id/alarm_details_label_monday"
+            <com.martyawesome.smartyalarm.CustomSwitch
+                android:id="@+id/alarm_details_repeat_monday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/alarm_details_label_sunday"
+                android:layout_alignParentLeft="true"
+                android:layout_alignRight="@+id/alarm_details_repeat_sunday"
                 android:layout_below="@+id/alarm_details_repeat_sunday"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:checked="true"
                 android:text="@string/details_monday" />
 
-            <TextView
-                android:id="@+id/alarm_details_label_tuesday"
+            <com.martyawesome.smartyalarm.CustomSwitch
+                android:id="@+id/alarm_details_repeat_tuesday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/alarm_details_label_monday"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_alignRight="@+id/alarm_details_repeat_monday"
+                android:layout_below="@+id/alarm_details_repeat_monday"
+                android:checked="true"
                 android:text="@string/details_tuesday" />
 
-            <TextView
-                android:id="@+id/alarm_details_label_wednesday"
+            <com.martyawesome.smartyalarm.CustomSwitch
+                android:id="@+id/alarm_details_repeat_wednesday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/alarm_details_label_tuesday"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_alignRight="@+id/alarm_details_repeat_tuesday"
+                android:layout_below="@+id/alarm_details_repeat_tuesday"
+                android:checked="true"
                 android:text="@string/details_wednesday" />
 
-            <TextView
-                android:id="@+id/alarm_details_label_thursday"
+            <com.martyawesome.smartyalarm.CustomSwitch
+                android:id="@+id/alarm_details_repeat_thursday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/alarm_details_label_wednesday"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_alignRight="@+id/alarm_details_repeat_wednesday"
+                android:layout_below="@+id/alarm_details_repeat_wednesday"
+                android:checked="true"
                 android:text="@string/details_thursday" />
 
-            <TextView
-                android:id="@+id/alarm_details_label_friday"
+            <com.martyawesome.smartyalarm.CustomSwitch
+                android:id="@+id/alarm_details_repeat_friday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/alarm_details_label_thursday"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_alignRight="@+id/alarm_details_repeat_thursday"
+                android:layout_below="@+id/alarm_details_repeat_thursday"
+                android:checked="true"
                 android:text="@string/details_friday" />
 
-            <TextView
-                android:id="@+id/alarm_details_label_saturday"
+            <com.martyawesome.smartyalarm.CustomSwitch
+                android:id="@+id/alarm_details_repeat_saturday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/alarm_details_label_friday"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_alignRight="@+id/alarm_details_repeat_friday"
+                android:layout_below="@+id/alarm_details_repeat_friday"
+                android:checked="true"
                 android:text="@string/details_saturday" />
 
             <View
                 android:id="@+id/divider4"
                 style="@style/Divider"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/alarm_details_label_saturday" />
-
-            <CheckBox
-                android:id="@+id/alarm_details_repeat_wednesday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/alarm_details_label_wednesday"
-                android:layout_alignBottom="@+id/alarm_details_label_wednesday"
-                android:layout_alignParentRight="true"
-                android:checked="true" />
-
-            <CheckBox
-                android:id="@+id/alarm_details_repeat_sunday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/alarm_details_label_sunday"
-                android:layout_alignBottom="@+id/alarm_details_label_sunday"
-                android:layout_alignParentRight="true"
-                android:checked="true" />
-
-            <CheckBox
-                android:id="@+id/alarm_details_repeat_monday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/alarm_details_label_monday"
-                android:layout_alignBottom="@+id/alarm_details_label_monday"
-                android:layout_alignParentRight="true"
-                android:checked="true" />
-
-            <CheckBox
-                android:id="@+id/alarm_details_repeat_tuesday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/alarm_details_label_tuesday"
-                android:layout_alignBottom="@+id/alarm_details_label_tuesday"
-                android:layout_alignParentRight="true"
-                android:checked="true" />
-
-            <CheckBox
-                android:id="@+id/alarm_details_repeat_thursday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/alarm_details_label_thursday"
-                android:layout_alignBottom="@+id/alarm_details_label_thursday"
-                android:layout_alignParentRight="true"
-                android:checked="true" />
-
-            <CheckBox
-                android:id="@+id/alarm_details_repeat_friday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/alarm_details_label_friday"
-                android:layout_alignBottom="@+id/alarm_details_label_friday"
-                android:layout_alignParentRight="true"
-                android:checked="true" />
-
-            <CheckBox
-                android:id="@+id/alarm_details_repeat_saturday"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/alarm_details_label_saturday"
-                android:layout_alignBottom="@+id/alarm_details_label_saturday"
-                android:layout_alignParentRight="true"
-                android:checked="true" />
+                android:layout_below="@+id/alarm_details_repeat_saturday" />
 
             <LinearLayout
                 android:id="@+id/alarm_ringtone_container"

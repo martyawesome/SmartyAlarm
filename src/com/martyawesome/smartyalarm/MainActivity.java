@@ -30,13 +30,13 @@ public class MainActivity extends ActionBarActivity {
 		mSettings = (ImageView) findViewById(R.id.settings);
 		mAbout = (ImageView) findViewById(R.id.about);
 
-		imageListeners();
 	}
 
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		imageListeners();
 	}
 
 	private void imageListeners() {
@@ -71,26 +71,36 @@ public class MainActivity extends ActionBarActivity {
 	private void imageViewOnClickAnimation(final ImageView imageView) {
 		new Thread() {
 			public void run() {
-				while (mCounter++ < 10) {
+				while (mCounter++ < 7) {
 					try {
 						runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
 								final int padding = (int) (1 * mScale + 0.5f);
-								if (mCounter < 5) {
-									imageView.setPadding(
-											imageView.getPaddingLeft() - padding,
-											imageView.getPaddingTop() - padding,
-											imageView.getPaddingRight() - padding,
-											imageView.getPaddingBottom()
-													- padding);
+								if (mCounter < 4) {
+									imageView
+											.setPadding(
+													imageView.getPaddingLeft()
+															- padding,
+													imageView.getPaddingTop()
+															- padding,
+													imageView.getPaddingRight()
+															- padding,
+													imageView
+															.getPaddingBottom()
+															- padding);
 								} else {
-									imageView.setPadding(
-											imageView.getPaddingLeft() + padding,
-											imageView.getPaddingTop() + padding,
-											imageView.getPaddingRight() + padding,
-											imageView.getPaddingBottom()
-													+ padding);
+									imageView
+											.setPadding(
+													imageView.getPaddingLeft()
+															+ padding,
+													imageView.getPaddingTop()
+															+ padding,
+													imageView.getPaddingRight()
+															+ padding,
+													imageView
+															.getPaddingBottom()
+															+ padding);
 								}
 								imageView.postInvalidate();
 							}
@@ -101,12 +111,8 @@ public class MainActivity extends ActionBarActivity {
 					}
 				}
 				mCounter = 0;
-				
 			}
-			
-			
 		}.start();
-
-		
 	}
+
 }

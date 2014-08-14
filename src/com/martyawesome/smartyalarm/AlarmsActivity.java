@@ -7,19 +7,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class AlarmsActivity extends ListActivity {
+
+	private AlarmListAdapter mAdapter;
+	private AlarmDBHelper dbHelper = new AlarmDBHelper(this);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarms);
 
-		// TextView emptyTextView = (TextView) getListView().getEmptyView();
-		// emptyTextView.setText(getString(R.string.no_alarms));
-
+		mAdapter = new AlarmListAdapter(this, dbHelper.getAlarms());
+		setListAdapter(mAdapter);
 	}
 
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+	}
+	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
@@ -35,18 +45,39 @@ public class AlarmsActivity extends ListActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		switch (item.getItemId()) {
 		case R.id.add_alarm: {
-			Intent intent = new Intent(this, AlarmDetailsActivity.class);
-
-			startActivity(intent);
+			startAlarmDetailsActivity(0);
 			break;
 		}
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void setAlarmEnabled(long id, boolean isEnabled) {
+		AlarmObject object = dbHelper.getAlarm(id);
+		object.isEnabled = isEnabled;
+		dbHelper.updateAlarm(object);
+
+		mAdapter.setAlarms(dbHelper.getAlarms());
+		mAdapter.notifyDataSetChanged();
+	}
+
+	public void startAlarmDetailsActivity(long id) {
+		Intent intent = new Intent(AlarmsActivity.this, AlarmDetailsActivity.class);
+		intent.putExtra("id", id);
+		//Toast.makeText(AlarmsActivity.this, String.valueOf(id), Toast.LENGTH_SHORT).show();
+		startActivityForResult(intent, 0);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == RESULT_OK) {
+			mAdapter.setAlarms(dbHelper.getAlarms());
+			mAdapter.notifyDataSetChanged();
+		}
 	}
 
 }

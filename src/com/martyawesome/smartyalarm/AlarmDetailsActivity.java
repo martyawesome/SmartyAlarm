@@ -8,25 +8,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 public class AlarmDetailsActivity extends Activity {
 
-	private Alarm mAlarm;
+	private AlarmDBHelper dbHelper = new AlarmDBHelper(this);
+	private AlarmObject mAlarmObject;
 	TimePicker mTimePicker;
 	EditText mAlarmName;
-	CheckBox mCheckBoxWeekly;
-	CheckBox mCheckBoxSunday;
-	CheckBox mCheckBoxMonday;
-	CheckBox mCheckBoxTuesday;
-	CheckBox mCheckBoxWednesday;
-	CheckBox mCheckBoxThursday;
-	CheckBox mCheckBoxFriday;
-	CheckBox mCheckBoxSaturday;
+	CustomSwitch mCustomSwitchWeekly;
+	CustomSwitch mCustomSwitchSunday;
+	CustomSwitch mCustomSwitchMonday;
+	CustomSwitch mCustomSwitchTuesday;
+	CustomSwitch mCustomSwitchWednesday;
+	CustomSwitch mCustomSwitchThursday;
+	CustomSwitch mCustomSwitchFriday;
+	CustomSwitch mCustomSwitchSaturday;
+	TextView mToneSelection;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +39,55 @@ public class AlarmDetailsActivity extends Activity {
 
 		mTimePicker = (TimePicker) findViewById(R.id.alarm_details_time_picker);
 		mAlarmName = (EditText) findViewById(R.id.alarm_details_name);
-		mCheckBoxWeekly = (CheckBox) findViewById(R.id.alarm_details_repeat_weekly);
-		mCheckBoxSunday = (CheckBox) findViewById(R.id.alarm_details_repeat_sunday);
-		mCheckBoxMonday = (CheckBox) findViewById(R.id.alarm_details_repeat_monday);
-		mCheckBoxTuesday = (CheckBox) findViewById(R.id.alarm_details_repeat_tuesday);
-		mCheckBoxWednesday = (CheckBox) findViewById(R.id.alarm_details_repeat_wednesday);
-		mCheckBoxThursday = (CheckBox) findViewById(R.id.alarm_details_repeat_thursday);
-		mCheckBoxFriday = (CheckBox) findViewById(R.id.alarm_details_repeat_friday);
-		mCheckBoxSaturday = (CheckBox) findViewById(R.id.alarm_details_repeat_saturday);
+		mCustomSwitchWeekly = (CustomSwitch) findViewById(R.id.alarm_details_repeat_weekly);
+		mCustomSwitchSunday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_sunday);
+		mCustomSwitchMonday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_monday);
+		mCustomSwitchTuesday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_tuesday);
+		mCustomSwitchWednesday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_wednesday);
+		mCustomSwitchThursday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_thursday);
+		mCustomSwitchFriday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_friday);
+		mCustomSwitchSaturday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_saturday);
+		mToneSelection = (TextView) findViewById(R.id.alarm_label_tone_selection);
 		
+
+		long id = getIntent().getExtras().getLong("id");
+		
+
+		if (id <= 0) {
+			mAlarmObject = new AlarmObject();
+		} else {
+			mAlarmObject = dbHelper.getAlarm(id);
+
+			mTimePicker.setCurrentMinute(mAlarmObject.timeMinute);
+			mTimePicker.setCurrentHour(mAlarmObject.timeHour);
+
+			mAlarmName.setText(mAlarmObject.name);
+
+			mCustomSwitchWeekly.setChecked(mAlarmObject.repeatWeekly);
+			mCustomSwitchSunday.setChecked(mAlarmObject
+					.getRepeatingDay(AlarmObject.SUNDAY));
+			mCustomSwitchMonday.setChecked(mAlarmObject
+					.getRepeatingDay(AlarmObject.MONDAY));
+			mCustomSwitchTuesday.setChecked(mAlarmObject
+					.getRepeatingDay(AlarmObject.TUESDAY));
+			mCustomSwitchWednesday.setChecked(mAlarmObject
+					.getRepeatingDay(AlarmObject.WEDNESDAY));
+			mCustomSwitchThursday.setChecked(mAlarmObject
+					.getRepeatingDay(AlarmObject.THURSDAY));
+			mCustomSwitchFriday.setChecked(mAlarmObject
+					.getRepeatingDay(AlarmObject.FRIDAY));
+			mCustomSwitchSaturday.setChecked(mAlarmObject
+					.getRepeatingDay(AlarmObject.SATURDAY));
+			
+			if (mAlarmObject.alarmTone.toString() == "" || mAlarmObject.alarmTone.toString().equals("") ||
+					mAlarmObject.alarmTone.toString().equalsIgnoreCase(""))
+				mToneSelection.setText(getResources().getString(
+						R.string.details_alarm_tone_default));
+			else
+				mToneSelection.setText(RingtoneManager.getRingtone(this,
+						mAlarmObject.alarmTone).getTitle(this));
+		}
+
 		final LinearLayout ringToneContainer = (LinearLayout) findViewById(R.id.alarm_ringtone_container);
 		ringToneContainer.setOnClickListener(new OnClickListener() {
 
@@ -56,9 +98,6 @@ public class AlarmDetailsActivity extends Activity {
 				startActivityForResult(intent, 1);
 			}
 		});
-
-		mAlarm = new Alarm();
-
 	}
 
 	@Override
@@ -76,6 +115,27 @@ public class AlarmDetailsActivity extends Activity {
 		}
 		case R.id.action_save_alarm_details: {
 			newAlarmValues();
+			AlarmDBHelper dbHelper = new AlarmDBHelper(this);
+
+			if (mAlarmObject.id <= 0) {
+				mAlarmObject.id = dbHelper.getMaxId() + 1;
+				dbHelper.createAlarm(mAlarmObject);
+				Toast.makeText(
+						AlarmDetailsActivity.this,
+						String.valueOf(getResources().getString(
+								R.string.add_alarm_success)), Toast.LENGTH_LONG)
+						.show();
+
+			} else {
+				dbHelper.updateAlarm(mAlarmObject);
+				Toast.makeText(
+						AlarmDetailsActivity.this,
+						getResources().getString(R.string.update_alarm_success),
+						Toast.LENGTH_LONG).show();
+
+			}
+
+			setResult(RESULT_OK);
 			finish();
 		}
 		}
@@ -89,12 +149,9 @@ public class AlarmDetailsActivity extends Activity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case 1: {
-				mAlarm.alarmTone = data
-						.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-
-				TextView txtToneSelection = (TextView) findViewById(R.id.alarm_label_tone_selection);
-				txtToneSelection.setText(RingtoneManager.getRingtone(this,
-						mAlarm.alarmTone).getTitle(this));
+				//get URI data from intent sent
+				mAlarmObject.alarmTone = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+				mToneSelection.setText(RingtoneManager.getRingtone(this, mAlarmObject.alarmTone).getTitle(this));
 				break;
 			}
 			default: {
@@ -104,18 +161,25 @@ public class AlarmDetailsActivity extends Activity {
 		}
 	}
 
-	private void newAlarmValues() {		
-		mAlarm.timeMinute = mTimePicker.getCurrentMinute().intValue();
-		mAlarm.timeHour = mTimePicker.getCurrentHour().intValue();
-		mAlarm.name = mAlarmName.getText().toString();
-		mAlarm.repeatWeekly = mCheckBoxWeekly.isChecked();
-		mAlarm.setRepeatingDay(Alarm.SUNDAY, mCheckBoxSunday.isChecked());
-		mAlarm.setRepeatingDay(Alarm.MONDAY, mCheckBoxMonday.isChecked());
-		mAlarm.setRepeatingDay(Alarm.TUESDAY, mCheckBoxTuesday.isChecked());
-		mAlarm.setRepeatingDay(Alarm.WEDNESDAY, mCheckBoxWednesday.isChecked());
-		mAlarm.setRepeatingDay(Alarm.THURSDAY, mCheckBoxThursday.isChecked());
-		mAlarm.setRepeatingDay(Alarm.FRIDAY, mCheckBoxFriday.isChecked());
-		mAlarm.setRepeatingDay(Alarm.SATURDAY, mCheckBoxSaturday.isChecked());
-		mAlarm.isEnabled = true;
+	private void newAlarmValues() {
+		mAlarmObject.timeMinute = mTimePicker.getCurrentMinute().intValue();
+		mAlarmObject.timeHour = mTimePicker.getCurrentHour().intValue();
+		mAlarmObject.name = mAlarmName.getText().toString();
+		mAlarmObject.repeatWeekly = mCustomSwitchWeekly.isChecked();
+		mAlarmObject.setRepeatingDay(AlarmObject.SUNDAY,
+				mCustomSwitchSunday.isChecked());
+		mAlarmObject.setRepeatingDay(AlarmObject.MONDAY,
+				mCustomSwitchMonday.isChecked());
+		mAlarmObject.setRepeatingDay(AlarmObject.TUESDAY,
+				mCustomSwitchTuesday.isChecked());
+		mAlarmObject.setRepeatingDay(AlarmObject.WEDNESDAY,
+				mCustomSwitchWednesday.isChecked());
+		mAlarmObject.setRepeatingDay(AlarmObject.THURSDAY,
+				mCustomSwitchThursday.isChecked());
+		mAlarmObject.setRepeatingDay(AlarmObject.FRIDAY,
+				mCustomSwitchFriday.isChecked());
+		mAlarmObject.setRepeatingDay(AlarmObject.SATURDAY,
+				mCustomSwitchSaturday.isChecked());
+		mAlarmObject.isEnabled = true;
 	}
 }

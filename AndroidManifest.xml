@@ -7,6 +7,8 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="19" />
+    
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -38,6 +40,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.martyawesome.smartyalarm.AlarmsActivity" />
         </activity>
+        
+        <receiver android:name="com.trigg.alarmclock.AlarmManagerHelper" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         
     </application>
 

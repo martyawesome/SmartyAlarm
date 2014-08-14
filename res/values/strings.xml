@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
 
     <string name="app_name">Smarty Alarm</string>
     <string name="action_settings">Settings</string>
@@ -21,5 +22,21 @@
     <string name="details_saturday">Saturday</string>
     <string name="details_alarm_tone">Alarm Tone</string>
     <string name="details_alarm_tone_default">Select an alarm tone</string>
+ 
+    
+    <!-- Prompt -->
+    <string name="add_alarm_success">Add an alarm successful!</string>
+    <string name="update_alarm_success">Update an alarm successful!</string>
+    
+    <!-- Alarm Adapter -->
+    <string name="initial_time">00:00</string>
+    <string name="initial_name">Untitled</string>
+    <string name="sunday">S</string>
+    <string name="monday">M</string>
+    <string name="tuesday">T</string>
+    <string name="wednesday">W</string>
+    <string name="thursday">S</string>
+    <string name="friday">F</string>
+    <string name="saturday">S</string>
 
 </resources>
