@@ -9,7 +9,7 @@
         android:targetSdkVersion="19" />
     
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+	
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -46,7 +46,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        
+        <service android:name="com.trigg.alarmclock.AlarmService" android:enabled="true"/>
     </application>
 
 </manifest>

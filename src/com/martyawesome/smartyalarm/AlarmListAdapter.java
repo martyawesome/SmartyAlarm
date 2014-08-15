@@ -91,12 +91,12 @@ public class AlarmListAdapter extends BaseAdapter {
 		ToggleButton btnToggle = (ToggleButton) view.findViewById(R.id.alarm_item_toggle);
 		btnToggle.setChecked(mObject.isEnabled);
 
-		view.setTag(Long.valueOf(mObject.id));
+		btnToggle.setTag(Long.valueOf(mObject.id));
 		btnToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				((AlarmsActivity) mContext).setAlarmEnabled(mObject.id, isChecked);
+				((AlarmsActivity) mContext).setAlarmEnabled(((Long) buttonView.getTag()).longValue(), isChecked);
 			}
 		});
 		

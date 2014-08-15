@@ -89,7 +89,9 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 				object.repeatWeekly);
 		values.put(AlarmConstants.COLUMN_NAME_ALARM_TONE,
 				object.alarmTone != null ? object.alarmTone.toString() : "");
-
+		values.put(AlarmConstants.COLUMN_NAME_ALARM_ENABLED, object.isEnabled);
+		
+		
 		String repeatingDays = "";
 		for (int i = 0; i < 7; ++i) {
 			repeatingDays += object.getRepeatingDay(i) + ",";

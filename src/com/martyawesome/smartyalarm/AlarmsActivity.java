@@ -55,12 +55,16 @@ public class AlarmsActivity extends ListActivity {
 	}
 
 	public void setAlarmEnabled(long id, boolean isEnabled) {
+		AlarmManagerHelper.cancelAlarms(this);
+		
 		AlarmObject object = dbHelper.getAlarm(id);
 		object.isEnabled = isEnabled;
 		dbHelper.updateAlarm(object);
 
 		mAdapter.setAlarms(dbHelper.getAlarms());
 		mAdapter.notifyDataSetChanged();
+		
+		AlarmManagerHelper.setAlarms(this);
 	}
 
 	public void startAlarmDetailsActivity(long id) {

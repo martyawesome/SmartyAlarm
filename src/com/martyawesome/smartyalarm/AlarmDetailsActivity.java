@@ -116,7 +116,8 @@ public class AlarmDetailsActivity extends Activity {
 		case R.id.action_save_alarm_details: {
 			newAlarmValues();
 			AlarmDBHelper dbHelper = new AlarmDBHelper(this);
-
+			AlarmManagerHelper.cancelAlarms(this);
+			
 			if (mAlarmObject.id <= 0) {
 				mAlarmObject.id = dbHelper.getMaxId() + 1;
 				dbHelper.createAlarm(mAlarmObject);
@@ -135,6 +136,7 @@ public class AlarmDetailsActivity extends Activity {
 
 			}
 
+			AlarmManagerHelper.setAlarms(this);
 			setResult(RESULT_OK);
 			finish();
 		}
