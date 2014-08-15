@@ -7,9 +7,10 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="19" />
-    
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -17,7 +18,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.martyawesome.smartyalarm.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,6 +29,7 @@
         <activity
             android:name="com.martyawesome.smartyalarm.AlarmsActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:parentActivityName="com.martyawesome.smartyalarm.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -35,18 +38,28 @@
         <activity
             android:name="com.martyawesome.smartyalarm.AlarmDetailsActivity"
             android:label="@string/title_activity_alarm_details"
+            android:screenOrientation="portrait"
             android:parentActivityName="com.martyawesome.smartyalarm.AlarmsActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.martyawesome.smartyalarm.AlarmsActivity" />
         </activity>
-        
-        <receiver android:name="com.trigg.alarmclock.AlarmManagerHelper" >
+
+        <receiver android:name="com.martyawesone.smartyalarm.AlarmManagerHelper" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <service android:name="com.trigg.alarmclock.AlarmService" android:enabled="true"/>
+
+        <service
+            android:name="com.martyawesome.smartyalarm.AlarmService"
+            android:enabled="true" />
+
+        <activity
+            android:name="com.martyawesome.smartyalarm.AlarmScreenActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>
