@@ -3,6 +3,7 @@ package com.martyawesome.smartyalarm;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,16 +49,15 @@ public class AlarmDetailsActivity extends Activity {
 		mCustomSwitchFriday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_friday);
 		mCustomSwitchSaturday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_saturday);
 		mToneSelection = (TextView) findViewById(R.id.alarm_label_tone_selection);
-		
 
 		long id = getIntent().getExtras().getLong("id");
-		
 
 		if (id <= 0) {
 			mAlarmObject = new AlarmObject();
 		} else {
 			mAlarmObject = dbHelper.getAlarm(id);
 
+			mTimePicker.setIs24HourView(false);
 			mTimePicker.setCurrentMinute(mAlarmObject.timeMinute);
 			mTimePicker.setCurrentHour(mAlarmObject.timeHour);
 
@@ -78,9 +78,10 @@ public class AlarmDetailsActivity extends Activity {
 					.getRepeatingDay(AlarmObject.FRIDAY));
 			mCustomSwitchSaturday.setChecked(mAlarmObject
 					.getRepeatingDay(AlarmObject.SATURDAY));
-			
-			if (mAlarmObject.alarmTone.toString() == "" || mAlarmObject.alarmTone.toString().equals("") ||
-					mAlarmObject.alarmTone.toString().equalsIgnoreCase(""))
+
+			if (mAlarmObject.alarmTone.toString() == ""
+					|| mAlarmObject.alarmTone.toString().equals("")
+					|| mAlarmObject.alarmTone.toString().equalsIgnoreCase(""))
 				mToneSelection.setText(getResources().getString(
 						R.string.details_alarm_tone_default));
 			else
@@ -117,7 +118,7 @@ public class AlarmDetailsActivity extends Activity {
 			newAlarmValues();
 			AlarmDBHelper dbHelper = new AlarmDBHelper(this);
 			AlarmManagerHelper.cancelAlarms(this);
-			
+
 			if (mAlarmObject.id <= 0) {
 				mAlarmObject.id = dbHelper.getMaxId() + 1;
 				dbHelper.createAlarm(mAlarmObject);
@@ -151,9 +152,11 @@ public class AlarmDetailsActivity extends Activity {
 		if (resultCode == RESULT_OK) {
 			switch (requestCode) {
 			case 1: {
-				//get URI data from intent sent
-				mAlarmObject.alarmTone = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-				mToneSelection.setText(RingtoneManager.getRingtone(this, mAlarmObject.alarmTone).getTitle(this));
+				// get URI data from intent sent
+				mAlarmObject.alarmTone = data
+						.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+				mToneSelection.setText(RingtoneManager.getRingtone(this,
+						mAlarmObject.alarmTone).getTitle(this));
 				break;
 			}
 			default: {
@@ -166,7 +169,13 @@ public class AlarmDetailsActivity extends Activity {
 	private void newAlarmValues() {
 		mAlarmObject.timeMinute = mTimePicker.getCurrentMinute().intValue();
 		mAlarmObject.timeHour = mTimePicker.getCurrentHour().intValue();
-		mAlarmObject.name = mAlarmName.getText().toString();
+
+		if (mAlarmName.getText().toString() == null
+				|| mAlarmName.getText().toString().equalsIgnoreCase(""))
+			mAlarmObject.name = getResources().getString(R.string.untitled);
+		else
+			mAlarmObject.name = mAlarmName.getText().toString();
+
 		mAlarmObject.repeatWeekly = mCustomSwitchWeekly.isChecked();
 		mAlarmObject.setRepeatingDay(AlarmObject.SUNDAY,
 				mCustomSwitchSunday.isChecked());
@@ -182,6 +191,12 @@ public class AlarmDetailsActivity extends Activity {
 				mCustomSwitchFriday.isChecked());
 		mAlarmObject.setRepeatingDay(AlarmObject.SATURDAY,
 				mCustomSwitchSaturday.isChecked());
-		mAlarmObject.isEnabled = true;
+		
+		if (mAlarmObject.alarmTone == null
+				|| mAlarmObject.alarmTone.toString() == ""){
+			mAlarmObject.alarmTone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+		}
+			
+			mAlarmObject.isEnabled = true;
 	}
 }

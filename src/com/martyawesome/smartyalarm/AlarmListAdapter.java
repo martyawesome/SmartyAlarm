@@ -2,16 +2,15 @@ package com.martyawesome.smartyalarm;
 
 import java.util.List;
 
-import android.R.integer;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -66,8 +65,25 @@ public class AlarmListAdapter extends BaseAdapter {
 
 		mObject = (AlarmObject) getItem(position);
 		TextView txtTime = (TextView) view.findViewById(R.id.alarm_item_time);
-		txtTime.setText(String.format("%02d : %02d", mObject.timeHour,
-				mObject.timeMinute));
+		TextView txtDayFormat = (TextView) view
+				.findViewById(R.id.alarm_item_time_day);
+
+		if (mObject.timeHour > 12) {
+			txtTime.setText(String.format("%02d : %02d", mObject.timeHour - 12,
+					mObject.timeMinute));
+			txtDayFormat.setText(mContext.getResources().getString(
+					R.string.dayTimePM));
+		} else if (mObject.timeHour < 12) {
+			txtTime.setText(String.format("%02d : %02d", mObject.timeHour,
+					mObject.timeMinute));
+			txtDayFormat.setText(mContext.getResources().getString(
+					R.string.dayTimeAM));
+		} else {
+			txtTime.setText(String.format("%02d : %02d", mObject.timeHour,
+					mObject.timeMinute));
+			txtDayFormat.setText(mContext.getResources().getString(
+					R.string.dayTimePM));
+		}
 
 		TextView txtName = (TextView) view.findViewById(R.id.alarm_item_name);
 		txtName.setText(mObject.name);
@@ -88,32 +104,49 @@ public class AlarmListAdapter extends BaseAdapter {
 		updateTextColor((TextView) view.findViewById(R.id.alarm_item_saturday),
 				mObject.getRepeatingDay(AlarmObject.SATURDAY));
 
-		ToggleButton btnToggle = (ToggleButton) view.findViewById(R.id.alarm_item_toggle);
+		ToggleButton btnToggle = (ToggleButton) view
+				.findViewById(R.id.alarm_item_toggle);
 		btnToggle.setChecked(mObject.isEnabled);
 
 		btnToggle.setTag(Long.valueOf(mObject.id));
 		btnToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				((AlarmsActivity) mContext).setAlarmEnabled(((Long) buttonView.getTag()).longValue(), isChecked);
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				((AlarmsActivity) mContext).setAlarmEnabled(
+						((Long) buttonView.getTag()).longValue(), isChecked);
 			}
 		});
-		
+
 		view.setTag(Long.valueOf(mObject.id));
-	    view.setOnClickListener(new OnClickListener() {
-			
+		view.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View view) {
-				((AlarmsActivity) mContext).startAlarmDetailsActivity(((Long) view.getTag()).longValue());
+				((AlarmsActivity) mContext)
+						.startAlarmDetailsActivity(((Long) view.getTag())
+								.longValue());
 			}
 		});
+
+		view.setOnLongClickListener(new OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View view) {
+				((AlarmsActivity) mContext).deleteAlarm(((Long) view
+						.getTag()).longValue());
+				return true;
+			}
+		});
+
 		return view;
 	}
 
 	private void updateTextColor(TextView view, boolean isOn) {
 		if (isOn) {
-			view.setTextColor(Color.GREEN);
+			view.setTextColor(mContext.getResources().getColor(
+					R.color.enabledDay));
 		} else {
 			view.setTextColor(Color.BLACK);
 		}
