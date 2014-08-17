@@ -19,6 +19,8 @@ public class AlarmObject {
 	public Uri alarmTone;
 	public String name;
 	public boolean isEnabled;
+	public boolean isOnSnooze;
+	public int snoozeTime;
 	
 	public AlarmObject(){
 		repeatingDays = new boolean[7];

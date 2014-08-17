@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.martyawesome.smartyalarm.MainActivity"
+            android:name="com.martyawesome.smartyalarm.activities.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -27,39 +27,38 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.martyawesome.smartyalarm.AlarmsActivity"
+            android:name="com.martyawesome.smartyalarm.activities.AlarmsActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.martyawesome.smartyalarm.MainActivity" >
+            android:parentActivityName="com.martyawesome.smartyalarm.activities.MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.martyawesome.smartyalarm.MainActivity" />
         </activity>
         <activity
-            android:name="com.martyawesome.smartyalarm.AlarmDetailsActivity"
+            android:name="com.martyawesome.smartyalarm.activities.AlarmDetailsActivity"
             android:label="@string/title_activity_alarm_details"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.martyawesome.smartyalarm.AlarmsActivity" >
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.martyawesome.smartyalarm.AlarmsActivity" />
         </activity>
+        <activity
+            android:name="com.martyawesome.smartyalarm.activities.AlarmScreenActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
 
-        <receiver android:name="com.martyawesone.smartyalarm.AlarmManagerHelper" >
+        <receiver android:name="com.martyawesone.smartyalarm.services.AlarmManagerHelper" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <service
-            android:name="com.martyawesome.smartyalarm.AlarmService"
-            android:enabled="true" />
-
-        <activity
-            android:name="com.martyawesome.smartyalarm.AlarmScreenActivity"
-            android:screenOrientation="portrait"
+            android:name="com.martyawesome.smartyalarm.services.AlarmService"
             android:label="@string/app_name" >
-        </activity>
+        </service>
     </application>
 
 </manifest>

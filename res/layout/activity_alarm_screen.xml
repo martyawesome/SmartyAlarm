@@ -3,11 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:padding="@dimen/activity_horizontal_margin"  >
+    android:padding="@dimen/activity_horizontal_margin" >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:background="@android:color/white"
         android:padding="@dimen/activity_horizontal_margin" >
 
@@ -18,8 +20,8 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="28dp"
-            android:textColor="@color/darkGray"
             android:text="Alarm!"
+            android:textColor="@color/darkGray"
             android:textSize="38dp" />
 
         <TextView
@@ -29,19 +31,8 @@
             android:layout_below="@+id/alarm_screen_time"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="28dp"
-            android:textColor="@color/darkGray"
-            android:text="Alarm name" />
-
-        <Button
-            android:id="@+id/alarm_screen_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="106dp"
-            android:text="Dismiss"
-            android:padding="@dimen/activity_small_horizontal_margin"
-            android:textSize="25dp" />
+            android:text="Alarm name"
+            android:textColor="@color/darkGray" />
 
         <TextView
             android:id="@+id/alarm_screen_time"
@@ -51,10 +42,32 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="27dp"
             android:gravity="center_horizontal"
-            android:textColor="@color/darkGray"
             android:text="00 : 00"
+            android:textColor="@color/darkGray"
             android:textSize="52dp" />
 
+        <Button
+            android:id="@+id/alarm_screen_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/alarm_screen_name"
+            android:layout_marginTop="36dp"
+            android:padding="@dimen/activity_small_horizontal_margin"
+            android:text="Dismiss"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/alarm_snooze"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/alarm_screen_name"
+            android:layout_toLeftOf="@+id/alarm_screen_button"
+            android:layout_marginTop="36dp"
+            android:padding="@dimen/activity_small_horizontal_margin"
+            android:text="@string/snooze"
+            android:textSize="25dp" />
     </RelativeLayout>
 
 </RelativeLayout>

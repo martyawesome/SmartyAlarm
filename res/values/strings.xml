@@ -22,7 +22,10 @@
     <string name="details_alarm_tone">Alarm Tone</string>
     <string name="details_alarm_tone_default">Select an alarm tone</string>
     <string name="untitled">Untitled</string>
-
+	<string name="snooze">Snooze</string>
+	<string name="minutes">Min</string>
+	<string name="seconds">Sec</string>
+    
     <!-- Prompt -->
     <string name="add_alarm_success">Add an alarm successful!</string>
     <string name="update_alarm_success">Update an alarm successful!</string>

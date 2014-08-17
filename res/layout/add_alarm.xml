@@ -13,8 +13,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin"
             android:background="@android:color/white"
+            android:padding="@dimen/activity_horizontal_margin"
             tools:context=".AlarmDetailsActivity" >
 
             <TimePicker
@@ -40,7 +40,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/alarm_details_name" />
 
-            <com.martyawesome.smartyalarm.CustomSwitch
+            <com.martyawesome.smartyalarm.ui.CustomSwitch
                 android:id="@+id/alarm_details_repeat_weekly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/alarm_details_repeat_weekly" />
 
-            <com.martyawesome.smartyalarm.CustomSwitch
+            <com.martyawesome.smartyalarm.ui.CustomSwitch
                 android:id="@+id/alarm_details_repeat_sunday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                 android:checked="true"
                 android:text="@string/details_sunday" />
 
-            <com.martyawesome.smartyalarm.CustomSwitch
+            <com.martyawesome.smartyalarm.ui.CustomSwitch
                 android:id="@+id/alarm_details_repeat_monday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                 android:checked="true"
                 android:text="@string/details_monday" />
 
-            <com.martyawesome.smartyalarm.CustomSwitch
+            <com.martyawesome.smartyalarm.ui.CustomSwitch
                 android:id="@+id/alarm_details_repeat_tuesday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 android:checked="true"
                 android:text="@string/details_tuesday" />
 
-            <com.martyawesome.smartyalarm.CustomSwitch
+            <com.martyawesome.smartyalarm.ui.CustomSwitch
                 android:id="@+id/alarm_details_repeat_wednesday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                 android:checked="true"
                 android:text="@string/details_wednesday" />
 
-            <com.martyawesome.smartyalarm.CustomSwitch
+            <com.martyawesome.smartyalarm.ui.CustomSwitch
                 android:id="@+id/alarm_details_repeat_thursday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                 android:checked="true"
                 android:text="@string/details_thursday" />
 
-            <com.martyawesome.smartyalarm.CustomSwitch
+            <com.martyawesome.smartyalarm.ui.CustomSwitch
                 android:id="@+id/alarm_details_repeat_friday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 android:checked="true"
                 android:text="@string/details_friday" />
 
-            <com.martyawesome.smartyalarm.CustomSwitch
+            <com.martyawesome.smartyalarm.ui.CustomSwitch
                 android:id="@+id/alarm_details_repeat_saturday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -166,6 +166,24 @@
                 style="@style/Divider"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/alarm_ringtone_container" />
+
+            <LinearLayout
+                android:id="@+id/snooze_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/divider3"
+                android:layout_marginTop="@dimen/activity_small_vertical_margin"
+                android:background="@color/dirtyWhite"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_small_horizontal_margin" >
+
+                <CheckBox
+                    android:id="@+id/snooze"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/snooze" />
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
 
