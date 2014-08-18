@@ -1,5 +1,7 @@
 package com.martyawesome.smartyalarm;
 
+import java.util.Random;
+
 public final class AlarmConstants {
 
 	//Database Values
@@ -23,5 +25,6 @@ public final class AlarmConstants {
 	public static final String TONE = "tone";
 	public static final String SNOOZE = "snooze";
 	public static final String SNOOZE_TIME = "snoozeTime";
+
 
 }

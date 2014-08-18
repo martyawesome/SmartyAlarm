@@ -6,7 +6,7 @@
     <string name="title_activity_alarms">AlarmsActivity</string>
     <string name="no_alarms">You have no alarms. Click the add an alarm icon in the upper right corner of the screen! :)</string>
     <string name="title_activity_alarm_details">AlarmDetailsActivity</string>
-    <string name="hello_world">Hello world!</string>
+    
 
     <!-- Add Alarm -->
 
@@ -22,10 +22,14 @@
     <string name="details_alarm_tone">Alarm Tone</string>
     <string name="details_alarm_tone_default">Select an alarm tone</string>
     <string name="untitled">Untitled</string>
-	<string name="snooze">Snooze</string>
-	<string name="minutes">Min</string>
-	<string name="seconds">Sec</string>
+    <string name="snooze">Snooze</string>
+    <string name="minutes">Min</string>
+    <string name="seconds">Sec</string>
     
+    <!-- Alarm -->
+    <string name="dismiss">Dismiss</string>
+    <string name="alarm">Alarm!</string>
+
     <!-- Prompt -->
     <string name="add_alarm_success">Add an alarm successful!</string>
     <string name="update_alarm_success">Update an alarm successful!</string>
@@ -43,5 +47,15 @@
     <string name="dayTimeAM">am</string>
     <string name="dayTimePM">pm</string>
     <string name="title_activity_alarm_screen">AlarmScreenActivity</string>
+    <string name="title_activity_alarm_screen_circle">AlarmScreenCircleActivity</string>
+    <string name="snooze_adapter">Snooze:</string>
+    
+    <!-- AlarmScreenCircleActivity -->
+    <string name="tap_me">Tap me </string>
+    <string name="tap_more"> more times!</string>
+    <string name="timer">sec remaining</string>
+    
+    <!-- Notification -->
+    <string name="notif_title">Alarm set!</string>
 
 </resources>

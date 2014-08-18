@@ -1,14 +1,9 @@
 package com.martyawesome.smartyalarm.adapters;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
-
-import com.martyawesome.smartyalarm.AlarmObject;
-import com.martyawesome.smartyalarm.R;
-import com.martyawesome.smartyalarm.R.color;
-import com.martyawesome.smartyalarm.R.id;
-import com.martyawesome.smartyalarm.R.layout;
-import com.martyawesome.smartyalarm.R.string;
-import com.martyawesome.smartyalarm.activities.AlarmsActivity;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -22,6 +17,10 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.martyawesome.smartyalarm.AlarmObject;
+import com.martyawesome.smartyalarm.R;
+import com.martyawesome.smartyalarm.activities.AlarmsActivity;
 
 public class AlarmListAdapter extends BaseAdapter {
 
@@ -112,6 +111,117 @@ public class AlarmListAdapter extends BaseAdapter {
 		updateTextColor((TextView) view.findViewById(R.id.alarm_item_saturday),
 				mObject.getRepeatingDay(AlarmObject.SATURDAY));
 
+		TextView txtSnooze = (TextView) view.findViewById(R.id.alarm_snooze);
+		if (mObject.isOnSnooze)
+			if (mObject.snoozeTime > 1)
+				txtSnooze.setText(mContext.getResources().getString(
+						R.string.snooze_adapter)
+						+ " Every "
+						+ String.valueOf(mObject.snoozeTime)
+						+ " minute");
+			else
+				txtSnooze.setText(mContext.getResources().getString(
+						R.string.snooze_adapter)
+						+ " Every "
+						+ String.valueOf(mObject.snoozeTime)
+						+ " minute");
+		else
+			txtSnooze.setText(mContext.getResources().getString(
+					R.string.snooze_adapter)
+					+ " Off");
+
+		TextView txtTimeLeft = (TextView) view
+				.findViewById(R.id.alarm_time_left);
+
+		if (mObject.isEnabled) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.HOUR_OF_DAY, mObject.timeHour);
+			calendar.set(Calendar.MINUTE, mObject.timeMinute);
+
+			// Find next time to set
+			final int nowDay = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+			final int nowHour = Calendar.getInstance()
+					.get(Calendar.HOUR_OF_DAY);
+			final int nowMinute = Calendar.getInstance().get(Calendar.MINUTE);
+
+			Calendar calendarCurrent = Calendar.getInstance();
+			calendarCurrent.set(Calendar.HOUR_OF_DAY, nowHour);
+			calendarCurrent.set(Calendar.MINUTE, nowMinute);
+			calendarCurrent.set(Calendar.DAY_OF_WEEK, nowDay);
+
+			boolean alarmSet = false;
+
+			// First check if it's later in the week
+			for (int dayOfWeek = Calendar.SUNDAY; dayOfWeek <= Calendar.SATURDAY; ++dayOfWeek) {
+				if (mObject.getRepeatingDay(dayOfWeek - 1)
+						&& dayOfWeek >= nowDay
+						&& !(dayOfWeek == nowDay && mObject.timeHour < nowHour)
+						&& !(dayOfWeek == nowDay && mObject.timeHour == nowHour && mObject.timeMinute <= nowMinute)) {
+					calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+					alarmSet = true;
+					break;
+				}
+			}
+
+			// Else check if it's earlier in the week
+			if (!alarmSet) {
+				for (int dayOfWeek = Calendar.SUNDAY; dayOfWeek <= Calendar.SATURDAY; ++dayOfWeek) {
+					if (mObject.getRepeatingDay(dayOfWeek - 1)
+							&& dayOfWeek <= nowDay && mObject.repeatWeekly) {
+						calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+						calendar.add(Calendar.WEEK_OF_YEAR, 1);
+						calendarCurrent.set(Calendar.WEEK_OF_YEAR, 1);
+						alarmSet = true;
+						break;
+					}
+				}
+			}
+
+			// get Time in milli seconds
+			long ms1 = calendar.getTimeInMillis();
+			long ms2 = calendarCurrent.getTimeInMillis();
+			// get difference in milli seconds
+			long diff = ms1 - ms2;
+			int diffInSec = (int) (diff / (1000));
+			int diffInMin = (int) (diff / (60 * 1000));
+			int diffInHour = (int) (diff / (60 * 60 * 1000));
+			int diffInDays = (int) (diff / (24 * 60 * 60 * 1000));
+
+			String nextAlarm = "In";
+
+			if (diffInSec > 0) {
+				if (diffInSec >= 60)
+					if (diffInMin >= 60)
+						if (diffInHour >= 24)
+							nextAlarm += " " + String.valueOf(diffInDays)
+									+ " days";
+						else {
+							nextAlarm += " " + String.valueOf(diffInHour)
+									+ " hours";
+							if (diffInMin % 60 > 0 && diffInMin % 60 < 60)
+								nextAlarm += " "
+										+ String.valueOf(diffInMin % 60)
+										+ " min";
+							if (diffInSec % 60 > 0 && diffInSec % 60 < 60)
+								nextAlarm += " "
+										+ String.valueOf(diffInSec % 60)
+										+ " sec";
+						}
+					else {
+						nextAlarm += " " + String.valueOf(diffInMin) + " min";
+						if (diffInSec % 60 > 0 && diffInSec % 60 < 60)
+							nextAlarm += " " + String.valueOf(diffInSec % 60)
+									+ " sec";
+					}
+				else
+					nextAlarm += " " + String.valueOf(diffInSec) + " sec";
+			} else
+				nextAlarm = "No Day is Activated";
+
+			txtTimeLeft.setText(nextAlarm);
+		} else
+			txtTimeLeft.setText("Disabled");
+
 		ToggleButton btnToggle = (ToggleButton) view
 				.findViewById(R.id.alarm_item_toggle);
 		btnToggle.setChecked(mObject.isEnabled);
@@ -142,8 +252,8 @@ public class AlarmListAdapter extends BaseAdapter {
 
 			@Override
 			public boolean onLongClick(View view) {
-				((AlarmsActivity) mContext).deleteAlarm(((Long) view
-						.getTag()).longValue());
+				((AlarmsActivity) mContext).deleteAlarm(((Long) view.getTag())
+						.longValue());
 				return true;
 			}
 		});

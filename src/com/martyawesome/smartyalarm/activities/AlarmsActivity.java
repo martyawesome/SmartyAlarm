@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.view.Menu;
@@ -31,6 +32,7 @@ public class AlarmsActivity extends ListActivity {
 	private AlarmDBHelper dbHelper = new AlarmDBHelper(this);
 	private Context mContext;
 	private NotificationManager mNotificationManager;
+	AlarmObject mAlarmObject;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +77,9 @@ public class AlarmsActivity extends ListActivity {
 	public void setAlarmEnabled(long id, boolean isEnabled) {
 		AlarmManagerHelper.cancelAlarms(this);
 
-		AlarmObject object = dbHelper.getAlarm(id);
-		object.isEnabled = isEnabled;
-		dbHelper.updateAlarm(object);
+		mAlarmObject = dbHelper.getAlarm(id);
+		mAlarmObject.isEnabled = isEnabled;
+		dbHelper.updateAlarm(mAlarmObject);
 
 		mAdapter.setAlarms(dbHelper.getAlarms());
 		mAdapter.notifyDataSetChanged();
@@ -114,10 +116,11 @@ public class AlarmsActivity extends ListActivity {
 						if (dbHelper.getMaxId() > 0) {
 							// Set the alarms
 							AlarmManagerHelper.setAlarms(mContext);
+							if (!dbHelper.checkIfAllAreEnabled())
+								mNotificationManager.cancelAll();
 						}
 
-						if (!dbHelper.checkIfAllAreEnabled())
-							mNotificationManager.cancelAll();
+						
 					}
 				}).show();
 	}
@@ -132,18 +135,62 @@ public class AlarmsActivity extends ListActivity {
 		}
 	}
 
+	@SuppressLint("NewApi")
 	private void notification() {
-		NotificationCompat.Builder mBuilder =
-			    new NotificationCompat.Builder(this)
-			    .setSmallIcon(R.drawable.ic_stat_alarm);
+		NotificationCompat.Builder mBuilder;
+
+		if (mAlarmObject.timeHour > 12) {
+			mBuilder = new NotificationCompat.Builder(this)
+					 .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_stat_alarm))
+					.setSmallIcon(R.drawable.ic_stat_alarm)
+					.setContentTitle(
+							getResources().getString(R.string.notif_title))
+					.setContentText(
+							"Alarm set at "
+									+ String.valueOf(mAlarmObject.timeHour - 12)
+									+ " : "
+									+ String.valueOf(mAlarmObject.timeMinute)
+									+ " "
+									+ getResources().getString(
+											R.string.dayTimePM));
+		} else if (mAlarmObject.timeHour < 12) {
+			mBuilder = new NotificationCompat.Builder(this)
+					 .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_stat_alarm))
+					.setSmallIcon(R.drawable.ic_stat_alarm)
+					.setContentTitle(
+							getResources().getString(R.string.notif_title))
+					.setContentText(
+							"Alarm set at "
+									+ String.valueOf(mAlarmObject.timeHour)
+									+ " : "
+									+ String.valueOf(mAlarmObject.timeMinute)
+									+ " "
+									+ getResources().getString(
+											R.string.dayTimeAM));
+		} else {
+			mBuilder = new NotificationCompat.Builder(this)
+					 .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_stat_alarm))
+					.setSmallIcon(R.drawable.ic_stat_alarm)
+					.setContentTitle(
+							getResources().getString(R.string.notif_title))
+					.setContentText(
+							"Alarm set at "
+									+ String.valueOf(mAlarmObject.timeHour)
+									+ " : "
+									+ String.valueOf(mAlarmObject.timeMinute)
+									+ " "
+									+ getResources().getString(
+											R.string.dayTimePM));
+		}
 
 		mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		
+
 		if (dbHelper.checkIfAllAreEnabled()) {
 
 			mNotificationManager.notify(0, mBuilder.build());
 		} else {
 			mNotificationManager.cancelAll();
 		}
+
 	}
 }

@@ -1,0 +1,108 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:gravity="center"
+    android:padding="@dimen/activity_horizontal_margin" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="@dimen/activity_horizontal_margin" >
+
+        <TextView
+            android:id="@+id/alarm_screen_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_small_horizontal_margin"
+            android:text="@string/alarm"
+            android:textColor="@color/darkGray"
+            android:textSize="56sp" />
+
+        <TextView
+            android:id="@+id/alarm_screen_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_very_small_horizontal_margin"
+            android:text="Untitled"
+            android:textColor="@color/darkGray"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/alarm_screen_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_very_small_horizontal_margin"
+            android:gravity="center_horizontal"
+            android:text="00:00"
+            android:textColor="@color/darkGray"
+            android:textSize="65sp" />
+
+        <LinearLayout
+            android:id="@+id/tap_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_small_horizontal_margin"
+            android:background="@drawable/circle_large"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_small_horizontal_margin" >
+
+            <TextView
+                android:id="@+id/alarm_tap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tap_me"
+                android:textColor="@android:color/white"
+                android:textSize="26sp" />
+
+            <TextView
+                android:id="@+id/alarm_tap_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@android:color/white"
+                android:textSize="26sp" />
+
+            <TextView
+                android:id="@+id/alarm_tap_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tap_more"
+                android:textColor="@android:color/white"
+                android:textSize="26sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/alarm_screen_time_remaining"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/timer"
+            android:textColor="@color/darkGray"
+            android:textSize="23sp" />
+
+        <Button
+            android:id="@+id/alarm_dismiss"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/dismiss"
+            android:textSize="24sp"
+             />
+
+        <Button
+            android:id="@+id/alarm_snooze"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/snooze"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+</RelativeLayout>

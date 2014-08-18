@@ -43,7 +43,6 @@ public class MainActivity extends ActionBarActivity {
 		// TODO Auto-generated method stub
 		super.onResume();
 		imageListeners();
-		notification();
 	}
 
 	private void imageListeners() {
@@ -87,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
 							}
 
 							Intent intent = new Intent(MainActivity.this,
-									AlarmsActivity.class);
+									AlarmScreenCircleActivity.class);
 							startActivity(intent);
 						} catch (InterruptedException ex) {
 						}
@@ -176,19 +175,6 @@ public class MainActivity extends ActionBarActivity {
 
 	}
 	
-	private void notification() {
-		NotificationCompat.Builder mBuilder =
-			    new NotificationCompat.Builder(this)
-			    .setSmallIcon(R.drawable.ic_stat_alarm);
 
-		NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		AlarmDBHelper dbHelper = new AlarmDBHelper(this);
-		if (dbHelper.checkIfAllAreEnabled()) {
-
-			mNotificationManager.notify(0, mBuilder.build());
-		} else {
-			mNotificationManager.cancelAll();
-		}
-	}
 
 }

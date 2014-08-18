@@ -19,7 +19,7 @@ public class AlarmObject {
 	public Uri alarmTone;
 	public String name;
 	public boolean isEnabled;
-	public boolean isOnSnooze;
+	public boolean isOnSnooze = false;
 	public int snoozeTime;
 	
 	public AlarmObject(){

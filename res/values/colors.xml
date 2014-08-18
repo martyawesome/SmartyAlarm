@@ -2,7 +2,7 @@
 <resources>
     <color name="colorScheme">#4f57a4</color>
     <color name="gray">#ccc</color>
-    <color name="darkGray">#333</color>
+    <color name="darkGray">#555</color>
     <color name="dirtyWhite">#eee</color>
     <color name="enabledDay">#2ac81e</color>
 </resources>

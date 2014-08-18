@@ -98,7 +98,23 @@
         android:layout_below="@+id/alarm_item_name"
         android:layout_marginLeft="4dp"
         android:layout_toRightOf="@+id/alarm_item_friday"
-        android:text="@string/sunday"
+        android:text="@string/saturday"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+    <TextView
+        android:id="@+id/alarm_snooze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_item_saturday"
+        android:text="@string/snooze_adapter"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+    <TextView
+        android:id="@+id/alarm_time_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_snooze"
+        android:text="@string/snooze_adapter"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ToggleButton

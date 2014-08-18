@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat.Builder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,8 +45,11 @@ public class AlarmDetailsActivity extends Activity {
 	CustomSwitch mCustomSwitchSaturday;
 	CheckBox mSnooze;
 	TextView mToneSelection;
+	TextView mSnoozeMinutes;
 	private NotificationManager mNotificationManager;
 	int mSnoozeTime;
+	SeekBar mSeekBar;
+	LinearLayout mSnoozeLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +69,11 @@ public class AlarmDetailsActivity extends Activity {
 		mCustomSwitchFriday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_friday);
 		mCustomSwitchSaturday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_saturday);
 		mToneSelection = (TextView) findViewById(R.id.alarm_label_tone_selection);
+		mSnoozeLayout = (LinearLayout) findViewById(R.id.snooze_container);
 
 		mSnooze = (CheckBox) findViewById(R.id.snooze);
+		addSnoozeLayout(15);
+
 		long id = getIntent().getExtras().getLong("id");
 
 		if (id <= 0) {
@@ -95,6 +103,12 @@ public class AlarmDetailsActivity extends Activity {
 			mCustomSwitchSaturday.setChecked(mAlarmObject
 					.getRepeatingDay(AlarmObject.SATURDAY));
 
+			mSnooze.setChecked(mAlarmObject.isOnSnooze);
+			if (mAlarmObject.isOnSnooze) {
+				addSnoozeLayout(mAlarmObject.snoozeTime);
+				seekBarListener(mAlarmObject.snoozeTime);
+			}
+
 			if (mAlarmObject.alarmTone.toString() == ""
 					|| mAlarmObject.alarmTone.toString().equals("")
 					|| mAlarmObject.alarmTone.toString().equalsIgnoreCase(""))
@@ -104,10 +118,6 @@ public class AlarmDetailsActivity extends Activity {
 				mToneSelection.setText(RingtoneManager.getRingtone(this,
 						mAlarmObject.alarmTone).getTitle(this));
 		}
-
-		addSnoozeLayout();
-		
-		
 
 		final LinearLayout ringToneContainer = (LinearLayout) findViewById(R.id.alarm_ringtone_container);
 		ringToneContainer.setOnClickListener(new OnClickListener() {
@@ -221,18 +231,20 @@ public class AlarmDetailsActivity extends Activity {
 		}
 
 		mAlarmObject.isEnabled = true;
-		
-		if(mAlarmObject.isOnSnooze)
+
+		if (mAlarmObject.isOnSnooze)
 			mAlarmObject.snoozeTime = mSnoozeTime;
 	}
 
-	private void addSnoozeLayout() {
-
-		final LinearLayout snoozeLayout = (LinearLayout) findViewById(R.id.snooze_container);
-		final SeekBar seekBar = new SeekBar(this);
-		final TextView snoozeMinutes = new TextView(this);
-		snoozeMinutes.setTextSize(18);
-
+	private void addSnoozeLayout(final int min) {
+		mSeekBar = new SeekBar(this);
+		mSnoozeMinutes = new TextView(this);
+		mSnoozeMinutes.setTextSize(18);
+		
+		if (mSnooze.isChecked()) {
+			mSnoozeTime = min;
+		}
+		
 		mSnooze.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -240,45 +252,103 @@ public class AlarmDetailsActivity extends Activity {
 				mAlarmObject.isOnSnooze = mSnooze.isChecked();
 				
 				if (mSnooze.isChecked()) {
-					snoozeLayout.addView(snoozeMinutes);
-					seekBar.setMax(60);
-					seekBar.setProgress(15);
-					snoozeMinutes.setText("15 min");
-					seekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+					mSnoozeTime = min;
+					seekBarListener(min);
+					
+				} else{
+					mSnoozeLayout.removeView(mSeekBar);
+					mSnoozeLayout.removeView(mSnoozeMinutes);
+				}
+			}
 
-						@Override
-						public void onStopTrackingTouch(SeekBar seekBar) {
-						}
+		});
+	}
+	
+	private void seekBarListener(final int min) {
+		
+		mSnoozeLayout.addView(mSnoozeMinutes);
+		mSeekBar.setMax(60);
+		mSeekBar.setProgress(min);
+		
+		mSnoozeMinutes.setText(String.valueOf(min) + " min");
+		mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
-						@Override
-						public void onStartTrackingTouch(SeekBar seekBar) {
-						}
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+			}
 
-						@Override
-						public void onProgressChanged(SeekBar seekBar,
-								int progress, boolean fromUser) {
-							if (progress == 0)
-								progress = 1;
-							snoozeMinutes.setText(Integer.toString(progress)
-									+ " min");
-							mSnoozeTime = progress;
-						}
-					});
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
 
-					snoozeLayout.addView(seekBar);
-				} else
-					snoozeLayout.removeView(seekBar);
-
+			@Override
+			public void onProgressChanged(SeekBar seekBar,
+					int progress, boolean fromUser) {
+				if (progress == 0)
+					progress = 1;
+				mSnoozeMinutes.setText(Integer.toString(progress)
+						+ " min");
+				mSnoozeTime = progress;
 			}
 		});
 
+		mSnoozeLayout.addView(mSeekBar);
+		
 	}
 
 	@SuppressLint("NewApi")
 	private void notification() {
+		NotificationCompat.Builder mBuilder;
 
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				this).setSmallIcon(R.drawable.ic_stat_alarm);
+		if (mAlarmObject.timeHour > 12) {
+			mBuilder = new NotificationCompat.Builder(this)
+					.setLargeIcon(
+							BitmapFactory.decodeResource(getResources(),
+									R.drawable.ic_stat_alarm))
+					.setSmallIcon(R.drawable.ic_stat_alarm)
+					.setContentTitle(
+							getResources().getString(R.string.notif_title))
+					.setContentText(
+							"Alarm set at "
+									+ String.valueOf(mAlarmObject.timeHour - 12)
+									+ " : "
+									+ String.valueOf(mAlarmObject.timeMinute)
+									+ " "
+									+ getResources().getString(
+											R.string.dayTimePM));
+		} else if (mAlarmObject.timeHour < 12) {
+			mBuilder = new NotificationCompat.Builder(this)
+					.setLargeIcon(
+							BitmapFactory.decodeResource(getResources(),
+									R.drawable.ic_stat_alarm))
+					.setSmallIcon(R.drawable.ic_stat_alarm)
+					.setContentTitle(
+							getResources().getString(R.string.notif_title))
+					.setContentText(
+							"Alarm set at "
+									+ String.valueOf(mAlarmObject.timeHour)
+									+ " : "
+									+ String.valueOf(mAlarmObject.timeMinute)
+									+ " "
+									+ getResources().getString(
+											R.string.dayTimeAM));
+		} else {
+			mBuilder = new NotificationCompat.Builder(this)
+					.setLargeIcon(
+							BitmapFactory.decodeResource(getResources(),
+									R.drawable.ic_stat_alarm))
+					.setSmallIcon(R.drawable.ic_stat_alarm)
+					.setContentTitle(
+							getResources().getString(R.string.notif_title))
+					.setContentText(
+							"Alarm set at "
+									+ String.valueOf(mAlarmObject.timeHour)
+									+ " : "
+									+ String.valueOf(mAlarmObject.timeMinute)
+									+ " "
+									+ getResources().getString(
+											R.string.dayTimePM));
+		}
 
 		mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 

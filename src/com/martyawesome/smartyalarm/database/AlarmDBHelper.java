@@ -73,10 +73,10 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 				.getColumnIndex(AlarmConstants.COLUMN_NAME_ALARM_ENABLED)) == 0 ? false
 				: true;
 		object.isOnSnooze = c.getInt(c
-				.getColumnIndex(AlarmConstants.COLUMN_NAME_ALARM_ENABLED)) == 0 ? false
+				.getColumnIndex(AlarmConstants.COLUMN_NAME_ALARM_SNOOZE)) == 0 ? false
 				: true;
 		object.snoozeTime = c.getInt(c
-				.getColumnIndex(AlarmConstants.COLUMN_NAME_ALARM_ENABLED)) == 0 ? 0
+				.getColumnIndex(AlarmConstants.COLUMN_NAME_ALARM_SNOOZE)) == 0 ? 0
 				: c.getInt(c
 						.getColumnIndex(AlarmConstants.COLUMN_NAME_ALARM_SNOOZE_TIME));
 
@@ -119,10 +119,12 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 		return values;
 	}
 
-	public long createAlarm(AlarmObject object) {
+	public void createAlarm(AlarmObject object) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
 		ContentValues values = populateContent(object);
-		return getWritableDatabase().insert(AlarmConstants.TABLE_NAME, null,
-				values);
+		db.insert(AlarmConstants.TABLE_NAME, null, values);
+		db.close(); // Closing database connection
 	}
 
 	public AlarmObject getAlarm(long id) {
@@ -137,20 +139,26 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 			return populateObject(c);
 		}
 
+		db.close();
 		return null;
 	}
 
-	public long updateAlarm(AlarmObject object) {
+	public void updateAlarm(AlarmObject object) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
 		ContentValues values = populateContent(object);
-		return getWritableDatabase().update(AlarmConstants.TABLE_NAME, values,
+		db.update(AlarmConstants.TABLE_NAME, values,
 				AlarmConstants.COLUMN_NAME_ALARM_ID + " = ?",
 				new String[] { String.valueOf(object.id) });
+		db.close();
 	}
 
-	public int deleteAlarm(long id) {
-		return getWritableDatabase().delete(AlarmConstants.TABLE_NAME,
+	public void deleteAlarm(long id) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(AlarmConstants.TABLE_NAME,
 				AlarmConstants.COLUMN_NAME_ALARM_ID + " = ?",
 				new String[] { String.valueOf(id) });
+		db.close();
 	}
 
 	public List<AlarmObject> getAlarms() {
@@ -170,6 +178,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 			return alarmList;
 		}
 
+		db.close();
 		return null;
 	}
 
@@ -188,6 +197,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 				id = cursor.getInt(0);
 			} while (cursor.moveToNext());
 		}
+		db.close();
 		return id;
 	}
 
@@ -199,11 +209,15 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 				+ 1;
 
 		Cursor c = db.rawQuery(select, null);
-
-		if (c != null && c.getCount() > 0)
+		
+		if (c != null && c.getCount() > 0) {
+			db.close();
 			return true;
-		else
+		}
+		else{
+			db.close();
 			return false;
+		}
 	}
 
 }
