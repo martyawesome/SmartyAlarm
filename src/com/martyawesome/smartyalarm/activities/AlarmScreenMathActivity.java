@@ -55,6 +55,9 @@ public class AlarmScreenMathActivity extends Activity {
 	TextView mSolveRemaining;
 	EditText mGetAnswer;
 	String[] mMathOperators;
+	String name;
+	int mTimeHour;
+	int mTimeMinute;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +68,9 @@ public class AlarmScreenMathActivity extends Activity {
 		findViewById(R.id.math_solve).setVisibility(View.VISIBLE);
 
 		final long id = getIntent().getLongExtra(AlarmConstants.ID, 0);
-		String name = getIntent().getStringExtra(AlarmConstants.NAME);
-		int timeHour = getIntent().getIntExtra(AlarmConstants.TIME_HOUR, 0);
-		int timeMinute = getIntent().getIntExtra(AlarmConstants.TIME_MINUTE, 0);
+		name = getIntent().getStringExtra(AlarmConstants.NAME);
+		mTimeHour = getIntent().getIntExtra(AlarmConstants.TIME_HOUR, 0);
+		mTimeMinute = getIntent().getIntExtra(AlarmConstants.TIME_MINUTE, 0);
 		String tone = getIntent().getStringExtra(AlarmConstants.TONE);
 		mIsOnSnooze = getIntent().getBooleanExtra(AlarmConstants.SNOOZE, false);
 
@@ -83,7 +86,7 @@ public class AlarmScreenMathActivity extends Activity {
 		mMathOperators = getResources().getStringArray(R.array.math_operators);
 
 		tvName.setText(name);
-		tvTime.setText(String.format("%02d : %02d", timeHour, timeMinute));
+		tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
 
 		createMediaPlayer(tone);
 		listeners(id);
@@ -240,12 +243,11 @@ public class AlarmScreenMathActivity extends Activity {
 
 		int randomOperator = r.nextInt(mMathOperators.length);
 
-		if (mMathOperators[randomOperator] == "/"
-				|| mMathOperators[randomOperator] == "-") {
+		if (randomOperator == 1) {
 			if (mMathValue2 > mMathValue1) {
-				mMathValue1 = mMathValue2 - mMathValue1;
-				mMathValue1 = mMathValue2 - mMathValue1;
-				mMathValue2 = mMathValue1 + (mMathValue2 - mMathValue1);
+				int temp = mMathValue2;
+				mMathValue2 = mMathValue1;
+				mMathValue1 = temp;
 			}
 		}
 
@@ -294,6 +296,7 @@ public class AlarmScreenMathActivity extends Activity {
 		protected void onPostExecute(Void view) {
 			mSolveRemaining.setText(String.valueOf(--mCorrectRemaining)
 					+ " Correct Answers Remaining");
+			
 			if(mCorrectRemaining == 0){
 				findViewById(R.id.math_buttons).setVisibility(
 						View.VISIBLE);
@@ -301,6 +304,10 @@ public class AlarmScreenMathActivity extends Activity {
 						View.GONE);
 				if (mIsOnSnooze)
 					mSnoozeButton.setVisibility(View.VISIBLE);
+				TextView tvName = (TextView) findViewById(R.id.alarm_screen_name_math_buttons);
+				TextView tvTime = (TextView) findViewById(R.id.alarm_screen_time_math_buttons);
+				tvName.setText(name);
+				tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
 			}
 		}
 

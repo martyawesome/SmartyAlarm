@@ -42,10 +42,10 @@ public class AlarmScreenCircleActivity extends Activity {
 
 	int mTapCounter;
 	int mTapCounterInitial;
-	private final int mTapCounterMinimum = 40;
-	private final int mTapCounterMaximum = 60;
+	private final int mTapCounterMinimum = 30;
+	private final int mTapCounterMaximum = 50;
 
-	int mTimerCount = 15 * 1000;
+	int mTimerCount = 24 * 1000;
 	boolean mFinished = false;
 	boolean mFailed = false;
 	boolean mIsOnSnooze;
