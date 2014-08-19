@@ -42,7 +42,7 @@
             android:gravity="center_horizontal"
             android:text="00:00"
             android:textColor="@color/darkGray"
-            android:textSize="65sp" />
+            android:textSize="85sp" />
 
         <LinearLayout
             android:id="@+id/tap_layout"
@@ -94,6 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/dismiss"
+            android:visibility="invisible"
             android:textSize="24sp"
              />
 
@@ -102,6 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/snooze"
+            android:visibility="invisible"
             android:textSize="24sp" />
     </LinearLayout>
 

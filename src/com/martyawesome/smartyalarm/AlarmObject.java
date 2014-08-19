@@ -14,7 +14,7 @@ public class AlarmObject {
 	public long id;
 	public int timeHour;
 	public int timeMinute;
-	private boolean repeatingDays[];
+	public boolean repeatingDays[];
 	public boolean repeatWeekly;
 	public Uri alarmTone;
 	public String name;

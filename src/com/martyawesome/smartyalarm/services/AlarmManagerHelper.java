@@ -74,7 +74,7 @@ public class AlarmManagerHelper extends BroadcastReceiver {
 								setAlarm(context, calendar, pIntent);
 								alarmSet = true;
 								break;
-							}
+							} 
 						}
 					}
 

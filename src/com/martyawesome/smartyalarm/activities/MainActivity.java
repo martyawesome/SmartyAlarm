@@ -109,7 +109,7 @@ public class MainActivity extends ActionBarActivity {
 							}
 
 							Intent intent = new Intent(MainActivity.this,
-									AlarmsActivity.class);
+									AlarmScreenMathActivity.class);
 							startActivity(intent);
 						} catch (InterruptedException ex) {
 						}

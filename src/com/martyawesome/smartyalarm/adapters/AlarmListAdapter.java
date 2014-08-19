@@ -150,6 +150,7 @@ public class AlarmListAdapter extends BaseAdapter {
 			calendarCurrent.set(Calendar.DAY_OF_WEEK, nowDay);
 
 			boolean alarmSet = false;
+			boolean weeklyAlarmEnabled = true;
 
 			// First check if it's later in the week
 			for (int dayOfWeek = Calendar.SUNDAY; dayOfWeek <= Calendar.SATURDAY; ++dayOfWeek) {
@@ -170,8 +171,14 @@ public class AlarmListAdapter extends BaseAdapter {
 							&& dayOfWeek <= nowDay && mObject.repeatWeekly) {
 						calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
 						calendar.add(Calendar.WEEK_OF_YEAR, 1);
-						calendarCurrent.set(Calendar.WEEK_OF_YEAR, 1);
 						alarmSet = true;
+						break;
+					}
+					if (mObject.getRepeatingDay(dayOfWeek - 1)
+							&& dayOfWeek <= nowDay && !mObject.repeatWeekly) {
+						calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+						calendar.add(Calendar.WEEK_OF_YEAR, 1);
+						weeklyAlarmEnabled = false;
 						break;
 					}
 				}
@@ -217,10 +224,16 @@ public class AlarmListAdapter extends BaseAdapter {
 					nextAlarm += " " + String.valueOf(diffInSec) + " sec";
 			} else
 				nextAlarm = "No Day is Activated";
-
-			txtTimeLeft.setText(nextAlarm);
+			
+			if(!weeklyAlarmEnabled)
+				nextAlarm = "Repeat weekly is not on";
+				
+			txtTimeLeft.setText(nextAlarm);		
+				
 		} else
 			txtTimeLeft.setText("Disabled");
+		
+		
 
 		ToggleButton btnToggle = (ToggleButton) view
 				.findViewById(R.id.alarm_item_toggle);

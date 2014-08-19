@@ -256,8 +256,7 @@ public class AlarmScreenCircleActivity extends Activity {
 		protected void onPostExecute(Void view) {
 			if (mFailed) {
 				mTap.setText(String.valueOf(mTapCounterInitial));
-				mTapCounter = mTapCounterMinimum
-						+ r.nextInt(mTapCounterMaximum - mTapCounterMinimum + 1);
+				mTapCounter = mTapCounterInitial;
 				mFailed = false;
 			} else
 				mTap.setText(String.valueOf(--mTapCounter));

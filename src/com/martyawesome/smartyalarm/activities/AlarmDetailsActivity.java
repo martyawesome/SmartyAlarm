@@ -70,6 +70,15 @@ public class AlarmDetailsActivity extends Activity {
 		mCustomSwitchSaturday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_saturday);
 		mToneSelection = (TextView) findViewById(R.id.alarm_label_tone_selection);
 		mSnoozeLayout = (LinearLayout) findViewById(R.id.snooze_container);
+		
+		mCustomSwitchWeekly.setChecked(true);
+		mCustomSwitchSunday.setChecked(true);
+		mCustomSwitchMonday.setChecked(true);
+		mCustomSwitchTuesday.setChecked(true);
+		mCustomSwitchWednesday.setChecked(true);
+		mCustomSwitchThursday.setChecked(true);
+		mCustomSwitchFriday.setChecked(true);
+		mCustomSwitchSaturday.setChecked(true);
 
 		mSnooze = (CheckBox) findViewById(R.id.snooze);
 		addSnoozeLayout(15);

@@ -1,0 +1,9 @@
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vf"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <include android:id="@+id/math_solve" layout="@layout/activity_alarm_screen_math_solve" />
+    <include android:id="@+id/math_buttons" layout="@layout/activity_alarm_screen_math_buttons" />
+
+</ViewFlipper>

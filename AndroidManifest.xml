@@ -63,9 +63,10 @@
         <activity
             android:name="com.martyawesome.smartyalarm.activities.AlarmScreenCircleActivity"
             android:label="@string/app_name" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.martyawesome.smartyalarm.activities.AlarmsActivity" />
+        </activity>
+        <activity
+            android:name="com.martyawesome.smartyalarm.activities.AlarmScreenMathActivity"
+            android:label="@string/title_activity_alarm_screen_math" >
         </activity>
     </application>
 
