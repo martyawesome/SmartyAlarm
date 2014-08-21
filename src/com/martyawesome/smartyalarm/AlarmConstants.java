@@ -1,8 +1,12 @@
 package com.martyawesome.smartyalarm;
 
-import java.util.Random;
 
 public final class AlarmConstants {
+	
+	//Genaral Values
+	//public static final String APP_FONT_STYLE = "fonts/Insanibc.ttf";
+	//public static final String APP_FONT_STYLE = "fonts/Harabara Mais Demo.otf";
+	public static final String APP_FONT_STYLE = "fonts/Roboto-BoldCondensed.ttf";
 
 	//Database Values
 	public static final String TABLE_NAME = "alarm";
@@ -25,6 +29,5 @@ public final class AlarmConstants {
 	public static final String TONE = "tone";
 	public static final String SNOOZE = "snooze";
 	public static final String SNOOZE_TIME = "snoozeTime";
-
-
+	
 }

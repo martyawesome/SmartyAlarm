@@ -1,12 +1,13 @@
 package com.martyawesome.smartyalarm.adapters;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.martyawesome.smartyalarm.AlarmConstants;
 import com.martyawesome.smartyalarm.AlarmObject;
 import com.martyawesome.smartyalarm.R;
 import com.martyawesome.smartyalarm.activities.AlarmsActivity;
@@ -27,10 +29,19 @@ public class AlarmListAdapter extends BaseAdapter {
 	private Context mContext;
 	private List<AlarmObject> mAlarms;
 	public AlarmObject mObject;
+	private Typeface tf;
 
 	public AlarmListAdapter(Context context, List<AlarmObject> alarms) {
 		mContext = context;
 		mAlarms = alarms;
+
+		int actionBarTitle = Resources.getSystem().getIdentifier(
+				"action_bar_title", "id", "android");
+		TextView actionBarTitleView = (TextView) ((Activity) context)
+				.getWindow().findViewById(actionBarTitle);
+		tf = Typeface.createFromAsset(context.getAssets(),
+				AlarmConstants.APP_FONT_STYLE);
+		actionBarTitleView.setTypeface(tf);
 	}
 
 	public void setAlarms(List<AlarmObject> alarms) {
@@ -72,8 +83,10 @@ public class AlarmListAdapter extends BaseAdapter {
 
 		mObject = (AlarmObject) getItem(position);
 		TextView txtTime = (TextView) view.findViewById(R.id.alarm_item_time);
+		txtTime.setTypeface(tf);
 		TextView txtDayFormat = (TextView) view
 				.findViewById(R.id.alarm_item_time_day);
+		txtDayFormat.setTypeface(tf);
 
 		if (mObject.timeHour > 12) {
 			txtTime.setText(String.format("%02d : %02d", mObject.timeHour - 12,
@@ -94,6 +107,7 @@ public class AlarmListAdapter extends BaseAdapter {
 
 		TextView txtName = (TextView) view.findViewById(R.id.alarm_item_name);
 		txtName.setText(mObject.name);
+		txtName.setTypeface(tf);
 
 		updateTextColor((TextView) view.findViewById(R.id.alarm_item_sunday),
 				mObject.getRepeatingDay(AlarmObject.SUNDAY));
@@ -112,6 +126,7 @@ public class AlarmListAdapter extends BaseAdapter {
 				mObject.getRepeatingDay(AlarmObject.SATURDAY));
 
 		TextView txtSnooze = (TextView) view.findViewById(R.id.alarm_snooze);
+		txtSnooze.setTypeface(tf);
 		if (mObject.isOnSnooze)
 			if (mObject.snoozeTime > 1)
 				txtSnooze.setText(mContext.getResources().getString(
@@ -132,6 +147,7 @@ public class AlarmListAdapter extends BaseAdapter {
 
 		TextView txtTimeLeft = (TextView) view
 				.findViewById(R.id.alarm_time_left);
+		txtTimeLeft.setTypeface(tf);
 
 		if (mObject.isEnabled) {
 			Calendar calendar = Calendar.getInstance();
@@ -224,20 +240,19 @@ public class AlarmListAdapter extends BaseAdapter {
 					nextAlarm += " " + String.valueOf(diffInSec) + " sec";
 			} else
 				nextAlarm = "No Day is Activated";
-			
-			if(!weeklyAlarmEnabled)
+
+			if (!weeklyAlarmEnabled)
 				nextAlarm = "Repeat weekly is not on";
-				
-			txtTimeLeft.setText(nextAlarm);		
-				
+
+			txtTimeLeft.setText(nextAlarm);
+
 		} else
 			txtTimeLeft.setText("Disabled");
-		
-		
 
 		ToggleButton btnToggle = (ToggleButton) view
 				.findViewById(R.id.alarm_item_toggle);
 		btnToggle.setChecked(mObject.isEnabled);
+		btnToggle.setTypeface(tf);
 
 		btnToggle.setTag(Long.valueOf(mObject.id));
 		btnToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -281,6 +296,8 @@ public class AlarmListAdapter extends BaseAdapter {
 		} else {
 			view.setTextColor(Color.BLACK);
 		}
+		
+		view.setTypeface(tf);
 	}
 
 }

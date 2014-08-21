@@ -1,24 +1,26 @@
 package com.martyawesome.smartyalarm.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ListActivity;
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import com.martyawesome.smartyalarm.AlarmConstants;
 import com.martyawesome.smartyalarm.AlarmObject;
 import com.martyawesome.smartyalarm.R;
 import com.martyawesome.smartyalarm.adapters.AlarmListAdapter;
@@ -39,7 +41,12 @@ public class AlarmsActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarms);
 		mContext = this;
-
+		
+        int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+        TextView actionBarTitleView = (TextView) getWindow().findViewById(actionBarTitle);
+        Typeface tf = Typeface.createFromAsset(getAssets(), AlarmConstants.APP_FONT_STYLE);
+        actionBarTitleView.setTypeface(tf);
+        
 		mAdapter = new AlarmListAdapter(this, dbHelper.getAlarms());
 		setListAdapter(mAdapter);
 	}
@@ -118,7 +125,6 @@ public class AlarmsActivity extends ListActivity {
 							AlarmManagerHelper.setAlarms(mContext);
 						}
 
-						
 					}
 				}).show();
 	}
@@ -139,43 +145,50 @@ public class AlarmsActivity extends ListActivity {
 
 		if (mAlarmObject.timeHour > 12) {
 			mBuilder = new NotificationCompat.Builder(this)
-					 .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_stat_alarm))
+					.setLargeIcon(
+							BitmapFactory.decodeResource(getResources(),
+									R.drawable.ic_stat_alarm))
 					.setSmallIcon(R.drawable.ic_stat_alarm)
 					.setContentTitle(
 							getResources().getString(R.string.notif_title))
 					.setContentText(
 							"Alarm set at "
-									+ String.valueOf(mAlarmObject.timeHour - 12)
-									+ " : "
-									+ String.valueOf(mAlarmObject.timeMinute)
+									+ String.format(" %02d : %02d",
+											mAlarmObject.timeHour - 12,
+											mAlarmObject.timeMinute)
 									+ " "
 									+ getResources().getString(
 											R.string.dayTimePM));
+
 		} else if (mAlarmObject.timeHour < 12) {
 			mBuilder = new NotificationCompat.Builder(this)
-					 .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_stat_alarm))
+					.setLargeIcon(
+							BitmapFactory.decodeResource(getResources(),
+									R.drawable.ic_stat_alarm))
 					.setSmallIcon(R.drawable.ic_stat_alarm)
 					.setContentTitle(
 							getResources().getString(R.string.notif_title))
 					.setContentText(
 							"Alarm set at "
-									+ String.valueOf(mAlarmObject.timeHour)
-									+ " : "
-									+ String.valueOf(mAlarmObject.timeMinute)
+									+ String.format(" %02d : %02d",
+											mAlarmObject.timeHour,
+											mAlarmObject.timeMinute)
 									+ " "
 									+ getResources().getString(
 											R.string.dayTimeAM));
 		} else {
 			mBuilder = new NotificationCompat.Builder(this)
-					 .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_stat_alarm))
+					.setLargeIcon(
+							BitmapFactory.decodeResource(getResources(),
+									R.drawable.ic_stat_alarm))
 					.setSmallIcon(R.drawable.ic_stat_alarm)
 					.setContentTitle(
 							getResources().getString(R.string.notif_title))
 					.setContentText(
 							"Alarm set at "
-									+ String.valueOf(mAlarmObject.timeHour)
-									+ " : "
-									+ String.valueOf(mAlarmObject.timeMinute)
+									+ String.format(" %02d : %02d",
+											mAlarmObject.timeHour,
+											mAlarmObject.timeMinute)
 									+ " "
 									+ getResources().getString(
 											R.string.dayTimePM));
@@ -185,7 +198,8 @@ public class AlarmsActivity extends ListActivity {
 
 		if (dbHelper.checkIfAllAreEnabled()) {
 
-			mNotificationManager.notify(0, mBuilder.build());
+			mNotificationManager
+					.notify((int) mAlarmObject.id, mBuilder.build());
 		} else {
 			mNotificationManager.cancelAll();
 		}

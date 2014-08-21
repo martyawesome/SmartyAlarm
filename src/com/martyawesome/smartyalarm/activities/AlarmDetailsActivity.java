@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.martyawesome.smartyalarm.AlarmConstants;
 import com.martyawesome.smartyalarm.AlarmObject;
 import com.martyawesome.smartyalarm.R;
 import com.martyawesome.smartyalarm.database.AlarmDBHelper;
@@ -54,7 +57,6 @@ public class AlarmDetailsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getActionBar().setTitle("Create New Alarm");
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.add_alarm);
 
@@ -70,7 +72,7 @@ public class AlarmDetailsActivity extends Activity {
 		mCustomSwitchSaturday = (CustomSwitch) findViewById(R.id.alarm_details_repeat_saturday);
 		mToneSelection = (TextView) findViewById(R.id.alarm_label_tone_selection);
 		mSnoozeLayout = (LinearLayout) findViewById(R.id.snooze_container);
-		
+
 		mCustomSwitchWeekly.setChecked(true);
 		mCustomSwitchSunday.setChecked(true);
 		mCustomSwitchMonday.setChecked(true);
@@ -80,7 +82,21 @@ public class AlarmDetailsActivity extends Activity {
 		mCustomSwitchFriday.setChecked(true);
 		mCustomSwitchSaturday.setChecked(true);
 
+		int actionBarTitle = Resources.getSystem().getIdentifier(
+				"action_bar_title", "id", "android");
+		TextView actionBarTitleView = (TextView) getWindow().findViewById(
+				actionBarTitle);
+		Typeface tf = Typeface.createFromAsset(getAssets(),
+				AlarmConstants.APP_FONT_STYLE);
+		actionBarTitleView.setTypeface(tf);
+		mAlarmName.setTypeface(tf);
+
+		TextView alarmLabelTone = (TextView) findViewById(R.id.alarm_label_tone);
+		alarmLabelTone.setTypeface(tf);
+		mToneSelection.setTypeface(tf);
+		
 		mSnooze = (CheckBox) findViewById(R.id.snooze);
+		mSnooze.setTypeface(tf);
 		addSnoozeLayout(15);
 
 		long id = getIntent().getExtras().getLong("id");
@@ -249,22 +265,22 @@ public class AlarmDetailsActivity extends Activity {
 		mSeekBar = new SeekBar(this);
 		mSnoozeMinutes = new TextView(this);
 		mSnoozeMinutes.setTextSize(18);
-		
+
 		if (mSnooze.isChecked()) {
 			mSnoozeTime = min;
 		}
-		
+
 		mSnooze.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				mAlarmObject.isOnSnooze = mSnooze.isChecked();
-				
+
 				if (mSnooze.isChecked()) {
 					mSnoozeTime = min;
 					seekBarListener(min);
-					
-				} else{
+
+				} else {
 					mSnoozeLayout.removeView(mSeekBar);
 					mSnoozeLayout.removeView(mSnoozeMinutes);
 				}
@@ -272,13 +288,13 @@ public class AlarmDetailsActivity extends Activity {
 
 		});
 	}
-	
+
 	private void seekBarListener(final int min) {
-		
+
 		mSnoozeLayout.addView(mSnoozeMinutes);
 		mSeekBar.setMax(60);
 		mSeekBar.setProgress(min);
-		
+
 		mSnoozeMinutes.setText(String.valueOf(min) + " min");
 		mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
@@ -291,18 +307,17 @@ public class AlarmDetailsActivity extends Activity {
 			}
 
 			@Override
-			public void onProgressChanged(SeekBar seekBar,
-					int progress, boolean fromUser) {
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
 				if (progress == 0)
 					progress = 1;
-				mSnoozeMinutes.setText(Integer.toString(progress)
-						+ " min");
+				mSnoozeMinutes.setText(Integer.toString(progress) + " min");
 				mSnoozeTime = progress;
 			}
 		});
 
 		mSnoozeLayout.addView(mSeekBar);
-		
+
 	}
 
 	@SuppressLint("NewApi")
@@ -319,12 +334,13 @@ public class AlarmDetailsActivity extends Activity {
 							getResources().getString(R.string.notif_title))
 					.setContentText(
 							"Alarm set at "
-									+ String.valueOf(mAlarmObject.timeHour - 12)
-									+ " : "
-									+ String.valueOf(mAlarmObject.timeMinute)
+									+ String.format(" %02d : %02d",
+											mAlarmObject.timeHour - 12,
+											mAlarmObject.timeMinute)
 									+ " "
 									+ getResources().getString(
 											R.string.dayTimePM));
+
 		} else if (mAlarmObject.timeHour < 12) {
 			mBuilder = new NotificationCompat.Builder(this)
 					.setLargeIcon(
@@ -335,9 +351,9 @@ public class AlarmDetailsActivity extends Activity {
 							getResources().getString(R.string.notif_title))
 					.setContentText(
 							"Alarm set at "
-									+ String.valueOf(mAlarmObject.timeHour)
-									+ " : "
-									+ String.valueOf(mAlarmObject.timeMinute)
+									+ String.format(" %02d : %02d",
+											mAlarmObject.timeHour,
+											mAlarmObject.timeMinute)
 									+ " "
 									+ getResources().getString(
 											R.string.dayTimeAM));
@@ -351,9 +367,9 @@ public class AlarmDetailsActivity extends Activity {
 							getResources().getString(R.string.notif_title))
 					.setContentText(
 							"Alarm set at "
-									+ String.valueOf(mAlarmObject.timeHour)
-									+ " : "
-									+ String.valueOf(mAlarmObject.timeMinute)
+									+ String.format(" %02d : %02d",
+											mAlarmObject.timeHour,
+											mAlarmObject.timeMinute)
 									+ " "
 									+ getResources().getString(
 											R.string.dayTimePM));
@@ -363,7 +379,8 @@ public class AlarmDetailsActivity extends Activity {
 
 		if (dbHelper.checkIfAllAreEnabled()) {
 
-			mNotificationManager.notify(0, mBuilder.build());
+			mNotificationManager
+					.notify((int) mAlarmObject.id, mBuilder.build());
 		} else {
 			mNotificationManager.cancelAll();
 		}

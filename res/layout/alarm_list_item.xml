@@ -119,9 +119,15 @@
 
     <ToggleButton
         android:id="@+id/alarm_item_toggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/activity_very_small_horizontal_margin"
+        android:background="@drawable/toggle_button"
+        android:textColor="@android:color/white"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
+        android:textSize="24sp" />
 
 </RelativeLayout>

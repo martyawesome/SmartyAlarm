@@ -4,6 +4,8 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -55,6 +57,7 @@ public class AlarmScreenWordActivity extends Activity {
 	String mAnswer = "";
 	int mTimeHour;
 	int mTimeMinute;
+	Typeface tf;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +84,20 @@ public class AlarmScreenWordActivity extends Activity {
 		mGetAnswer = (EditText) findViewById(R.id.answer);
 
 		mAlphabet = getResources().getStringArray(R.array.alphabet);
+
+		int actionBarTitle = Resources.getSystem().getIdentifier(
+				"action_bar_title", "id", "android");
+		TextView actionBarTitleView = (TextView) getWindow().findViewById(
+				actionBarTitle);
+		tf = Typeface.createFromAsset(getAssets(),
+				AlarmConstants.APP_FONT_STYLE);
+		actionBarTitleView.setTypeface(tf);
+		mTvName.setTypeface(tf);
+		mTvTime.setTypeface(tf);
+		mSolveRemaining.setTypeface(tf);
+		mGetAnswer.setTypeface(tf);
+		mSubmit.setTypeface(tf);
+		mWord.setTypeface(tf);
 
 		mTvName.setText(name);
 		mTvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
@@ -280,6 +297,10 @@ public class AlarmScreenWordActivity extends Activity {
 			TextView tvTime = (TextView) findViewById(R.id.alarm_screen_buttons_time);
 			tvName.setText(name);
 			tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
+			mDismissButton.setTypeface(tf);
+			mSnoozeButton.setTypeface(tf);
+			tvName.setTypeface(tf);
+			tvTime.setTypeface(tf);
 		}
 
 	}

@@ -5,4 +5,7 @@
     <color name="darkGray">#555</color>
     <color name="dirtyWhite">#eee</color>
     <color name="enabledDay">#2ac81e</color>
+    <color name="tomato">#a23643</color>
+    <color name="mossGreen">#246c60</color>
+    <color name="appleGreen">#85a039</color>
 </resources>

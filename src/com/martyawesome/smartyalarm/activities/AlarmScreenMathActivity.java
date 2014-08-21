@@ -4,6 +4,8 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -59,6 +61,7 @@ public class AlarmScreenMathActivity extends Activity {
 	String name;
 	int mTimeHour;
 	int mTimeMinute;
+	Typeface tf;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +89,27 @@ public class AlarmScreenMathActivity extends Activity {
 		mMathSubmit = (Button) findViewById(R.id.math_submit);
 		mGetAnswer = (EditText) findViewById(R.id.sum);
 
+		int actionBarTitle = Resources.getSystem().getIdentifier(
+				"action_bar_title", "id", "android");
+		TextView actionBarTitleView = (TextView) getWindow().findViewById(
+				actionBarTitle);
+		tf = Typeface.createFromAsset(getAssets(),
+				AlarmConstants.APP_FONT_STYLE);
+		actionBarTitleView.setTypeface(tf);
+		mTvName.setTypeface(tf);
+		mTvTime.setTypeface(tf);
+		mSolveRemaining.setTypeface(tf);
+		mGetAnswer.setTypeface(tf);
+		mValue1.setTypeface(tf);
+		mValue2.setTypeface(tf);
+		mMathSubmit.setTypeface(tf);
+		mOperator.setTypeface(tf);
+
 		mMathOperators = getResources().getStringArray(R.array.math_operators);
 
 		mTvName.setText(name);
 		mTvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
-		
+
 		createMediaPlayer(tone);
 		listeners(id);
 
@@ -129,10 +148,10 @@ public class AlarmScreenMathActivity extends Activity {
 				if (mGetAnswer.getText().toString().length() > 0) {
 					if (mOutput == Integer.parseInt(mGetAnswer.getText()
 							.toString())) {
-						
+
 						new ChangeUI().execute();
 						initializeNumbers();
-						
+
 					} else {
 						initializeNumbers();
 						Toast.makeText(AlarmScreenMathActivity.this,
@@ -146,7 +165,7 @@ public class AlarmScreenMathActivity extends Activity {
 				mGetAnswer.setText("");
 			}
 		});
-		
+
 		mDismissButton = (Button) findViewById(R.id.alarm_dismiss);
 		mDismissButton.setOnClickListener(new OnClickListener() {
 
@@ -298,12 +317,10 @@ public class AlarmScreenMathActivity extends Activity {
 		protected void onPostExecute(Void view) {
 			mSolveRemaining.setText(String.valueOf(--mCorrectRemaining)
 					+ " Correct Answers Remaining");
-			
-			if(mCorrectRemaining == 0){
-				findViewById(R.id.buttons).setVisibility(
-						View.VISIBLE);
-				findViewById(R.id.math).setVisibility(
-						View.GONE);
+
+			if (mCorrectRemaining == 0) {
+				findViewById(R.id.buttons).setVisibility(View.VISIBLE);
+				findViewById(R.id.math).setVisibility(View.GONE);
 				if (mIsOnSnooze)
 					mSnoozeButton.setVisibility(View.VISIBLE);
 				initializeWakeUpButtons();
@@ -315,6 +332,10 @@ public class AlarmScreenMathActivity extends Activity {
 			TextView tvTime = (TextView) findViewById(R.id.alarm_screen_buttons_time);
 			tvName.setText(name);
 			tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
+			mDismissButton.setTypeface(tf);
+			mSnoozeButton.setTypeface(tf);
+			tvName.setTypeface(tf);
+			tvTime.setTypeface(tf);
 		}
 
 	}

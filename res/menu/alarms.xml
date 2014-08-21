@@ -3,10 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.martyawesome.smartyalarm.AlarmsActivity" >
 
-    <item android:id="@+id/add_alarm"
-        android:title="Add Alarm"
+    <item
+        android:id="@+id/add_alarm"
+        android:icon="@drawable/ic_action_add_alarm"
+        android:orderInCategory="99"
+        android:showAsAction="always"
+        android:title="@string/action_add_alarm"/>
+    <item
+        android:id="@+id/drop_down"
+        android:icon="@drawable/ic_action_overflow"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:icon="@drawable/ic_action_add_alarm"/>
+        android:title="@string/action_settings">
+        <menu>
+            <item
+                android:id="@+id/settings"
+                android:showAsAction="ifRoom"
+                android:title="@string/action_settings"
+                android:icon="@drawable/ic_action_settings"/>
+            <item
+                android:id="@+id/help"
+                android:showAsAction="ifRoom"
+                android:icon="@drawable/ic_action_help"
+                android:title="@string/action_help"/>
+            <item
+                android:id="@+id/about"
+                android:showAsAction="ifRoom"
+                android:icon="@drawable/ic_action_about"
+                android:title="@string/action_about"/>
+        </menu>
+    </item>
 
 </menu>

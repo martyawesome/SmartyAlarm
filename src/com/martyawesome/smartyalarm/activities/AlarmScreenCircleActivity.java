@@ -4,6 +4,8 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -55,6 +57,7 @@ public class AlarmScreenCircleActivity extends Activity {
 	Random r;
 	Button mSnoozeButton;
 	Button mDismissButton;
+	Typeface tf;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,15 +78,24 @@ public class AlarmScreenCircleActivity extends Activity {
 
 		mTvName = (TextView) findViewById(R.id.alarm_screen_name_tap);
 		mTvTime = (TextView) findViewById(R.id.alarm_screen_time_tap);
+		mTimeRemaining = (TextView) findViewById(R.id.time_remaining_taptap);
+		mTap = (TextView) findViewById(R.id.alarm_tap_number);
 		
-		mTvName.setText(mName);
+		int actionBarTitle = Resources.getSystem().getIdentifier(
+				"action_bar_title", "id", "android");
+		TextView actionBarTitleView = (TextView) getWindow().findViewById(
+				actionBarTitle);
+		tf = Typeface.createFromAsset(getAssets(),
+				AlarmConstants.APP_FONT_STYLE);
+		actionBarTitleView.setTypeface(tf);
+		mTvName.setTypeface(tf);
+		mTvTime.setTypeface(tf);
+		mTimeRemaining.setTypeface(tf);
+		mTap.setTypeface(tf);	
+	
 		mTvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
 
 		createMediaPlayer(tone);
-
-		mTap = (TextView) findViewById(R.id.alarm_tap_number);
-		mTimeRemaining = (TextView) findViewById(R.id.time_remaining_taptap);
-
 		listeners(id);
 
 		Runnable releaseWakelock = createWakeLock();
@@ -251,6 +263,10 @@ public class AlarmScreenCircleActivity extends Activity {
 		TextView tvTime = (TextView) findViewById(R.id.alarm_screen_buttons_time);
 		tvName.setText(mName);
 		tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
+		tvName.setTypeface(tf);
+		tvTime.setTypeface(tf);
+		mDismissButton.setTypeface(tf);
+		mSnoozeButton.setTypeface(tf);
 	}
 
 	@Override
