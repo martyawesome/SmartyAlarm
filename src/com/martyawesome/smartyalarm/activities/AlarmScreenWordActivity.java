@@ -9,7 +9,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -17,8 +16,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.martyawesome.smartyalarm.AlarmConstants;
 import com.martyawesome.smartyalarm.AlarmObject;
@@ -26,7 +26,7 @@ import com.martyawesome.smartyalarm.R;
 import com.martyawesome.smartyalarm.database.AlarmDBHelper;
 import com.martyawesome.smartyalarm.services.AlarmManagerHelper;
 
-public class AlarmScreenCircleActivity extends Activity {
+public class AlarmScreenWordActivity extends Activity {
 
 	public final String TAG = this.getClass().getSimpleName();
 
@@ -36,25 +36,25 @@ public class AlarmScreenCircleActivity extends Activity {
 	private static final int WAKELOCK_TIMEOUT = 60 * 1000;
 	AlarmDBHelper dbHelper = new AlarmDBHelper(this);
 	AlarmObject mAlarmObject;
-	TextView mTap;
-	TextView mTimeRemaining;
-	TextView mTvName;
-	TextView mTvTime;
-	LinearLayout mTapLayout;
-	String mName;
-	int mTimeHour;
-	int mTimeMinute;
-	int mTapCounter;
-	int mTapCounterInitial;
-	int mTapCounterMinimum = 30;
-	int mTapCounterMaximum = 50;
-	int mTimerCount = 24 * 1000;
-	boolean mFinished = false;
-	boolean mFailed = false;
+	int mCorrectRemaining = 3;
+	int mWordLengthMinimum = 5;
+	int mWordLengthMaximum = 10;
 	boolean mIsOnSnooze;
+	boolean mFinished = false;
 	Random r;
 	Button mSnoozeButton;
 	Button mDismissButton;
+	Button mSubmit;
+	TextView mWord;
+	TextView mSolveRemaining;
+	TextView mTvName;
+	TextView mTvTime;
+	EditText mGetAnswer;
+	String[] mAlphabet;
+	String name;
+	String mAnswer = "";
+	int mTimeHour;
+	int mTimeMinute;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,32 +62,33 @@ public class AlarmScreenCircleActivity extends Activity {
 		setContentView(R.layout.activity_alarm_screen);
 
 		findViewById(R.id.buttons).setVisibility(View.GONE);
-		findViewById(R.id.word).setVisibility(View.GONE);
+		findViewById(R.id.word).setVisibility(View.VISIBLE);
+		findViewById(R.id.tap).setVisibility(View.GONE);
 		findViewById(R.id.math).setVisibility(View.GONE);
-		findViewById(R.id.tap).setVisibility(View.VISIBLE);
 
 		final long id = getIntent().getLongExtra(AlarmConstants.ID, 0);
-		mName = getIntent().getStringExtra(AlarmConstants.NAME);
+		name = getIntent().getStringExtra(AlarmConstants.NAME);
 		mTimeHour = getIntent().getIntExtra(AlarmConstants.TIME_HOUR, 0);
 		mTimeMinute = getIntent().getIntExtra(AlarmConstants.TIME_MINUTE, 0);
 		String tone = getIntent().getStringExtra(AlarmConstants.TONE);
 		mIsOnSnooze = getIntent().getBooleanExtra(AlarmConstants.SNOOZE, false);
 
-		mTvName = (TextView) findViewById(R.id.alarm_screen_name_tap);
-		mTvTime = (TextView) findViewById(R.id.alarm_screen_time_tap);
-		
-		mTvName.setText(mName);
+		mTvName = (TextView) findViewById(R.id.alarm_screen_name_word);
+		mTvTime = (TextView) findViewById(R.id.alarm_screen_time_word);
+		mSolveRemaining = (TextView) findViewById(R.id.word_correct);
+		mWord = (TextView) findViewById(R.id.word_textView);
+		mSubmit = (Button) findViewById(R.id.submit);
+		mGetAnswer = (EditText) findViewById(R.id.answer);
+
+		mAlphabet = getResources().getStringArray(R.array.alphabet);
+
+		mTvName.setText(name);
 		mTvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
 
 		createMediaPlayer(tone);
-
-		mTap = (TextView) findViewById(R.id.alarm_tap_number);
-		mTimeRemaining = (TextView) findViewById(R.id.time_remaining_taptap);
-
 		listeners(id);
 
 		Runnable releaseWakelock = createWakeLock();
-
 		new Handler().postDelayed(releaseWakelock, WAKELOCK_TIMEOUT);
 	}
 
@@ -115,6 +116,28 @@ public class AlarmScreenCircleActivity extends Activity {
 	}
 
 	private void listeners(final long id) {
+		mSubmit.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				if (mGetAnswer.getText().toString().length() > 0) {
+					if (mGetAnswer.getText().toString().equals(mAnswer)) {
+						new ChangeUI().execute();
+						mAnswer = "";
+						initializeWord();
+
+					} else {
+						Toast.makeText(AlarmScreenWordActivity.this,
+								"Incorrect Answer", Toast.LENGTH_SHORT).show();
+					}
+				} else
+					Toast.makeText(AlarmScreenWordActivity.this,
+							getResources().getString(R.string.empty_edit_text),
+							Toast.LENGTH_SHORT).show();
+
+				mGetAnswer.setText("");
+			}
+		});
 
 		mDismissButton = (Button) findViewById(R.id.alarm_dismiss);
 		mDismissButton.setOnClickListener(new OnClickListener() {
@@ -132,7 +155,7 @@ public class AlarmScreenCircleActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 
-				AlarmManagerHelper.cancelAlarms(AlarmScreenCircleActivity.this);
+				AlarmManagerHelper.cancelAlarms(AlarmScreenWordActivity.this);
 
 				AlarmObject object = dbHelper.getAlarm(id);
 				if (object.timeMinute > 60 - getIntent().getIntExtra(
@@ -149,21 +172,10 @@ public class AlarmScreenCircleActivity extends Activity {
 
 				dbHelper.updateAlarm(object);
 
-				AlarmManagerHelper.setAlarms(AlarmScreenCircleActivity.this);
+				AlarmManagerHelper.setAlarms(AlarmScreenWordActivity.this);
 
 				mPlayer.stop();
 				finish();
-			}
-		});
-
-		mTapLayout = (LinearLayout) findViewById(R.id.tap_layout);
-		mTapLayout.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				if (mTapCounter >= 0 && !mFinished) {
-					new ChangeUI().execute();
-				}
 			}
 		});
 
@@ -212,45 +224,25 @@ public class AlarmScreenCircleActivity extends Activity {
 			mWakeLock.acquire();
 		}
 
-		r = new Random();
-		mTapCounterInitial = mTapCounter = mTapCounterMinimum
-				+ r.nextInt(mTapCounterMaximum - mTapCounterMinimum + 1);
-
-		mTap.setText(String.valueOf(mTapCounter));
-
-		new CountDownTimer(mTimerCount, 1) {
-
-			public void onTick(long millisUntilFinished) {
-				mTimeRemaining.setText(millisUntilFinished / 1000 + " "
-						+ getResources().getString(R.string.timer));
-				if (mTapCounter == 0) {
-					if (mIsOnSnooze)
-						mSnoozeButton.setVisibility(View.VISIBLE);
-					findViewById(R.id.buttons).setVisibility(View.VISIBLE);
-					findViewById(R.id.tap).setVisibility(View.GONE);
-					mTimeRemaining.setText("Done!");
-					mFinished = true;
-
-					initializeWakeUpButtons();
-					cancel();
-				}
-			}
-
-			public void onFinish() {
-				mFailed = true;
-				new ChangeUI().execute();
-				start();
-			}
-
-		}.start();
+		initializeWord();
 
 	}
 
-	private void initializeWakeUpButtons() {
-		TextView tvName = (TextView) findViewById(R.id.alarm_screen_buttons_name);
-		TextView tvTime = (TextView) findViewById(R.id.alarm_screen_buttons_time);
-		tvName.setText(mName);
-		tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
+	private void initializeWord() {
+		r = new Random();
+		int wordLength = mWordLengthMinimum
+				+ r.nextInt(mWordLengthMaximum - mWordLengthMinimum + 1);
+
+		for (int i = 0; i < wordLength; i++) {
+			if (r.nextInt(2) == 0)
+				mAnswer += mAlphabet[r.nextInt(mAlphabet.length)].toUpperCase();
+			else
+				mAnswer += mAlphabet[r.nextInt(mAlphabet.length)].toLowerCase();
+		}
+
+		mWord.setText(mAnswer);
+		mSolveRemaining.setText(String.valueOf(mCorrectRemaining)
+				+ " Correct Answers Remaining");
 	}
 
 	@Override
@@ -271,14 +263,23 @@ public class AlarmScreenCircleActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(Void view) {
-			if (mFailed) {
-				mTap.setText(String.valueOf(mTapCounterInitial));
-				mTapCounter = mTapCounterInitial;
-				mFailed = false;
-			} else
-				mTap.setText(String.valueOf(--mTapCounter));
+			mSolveRemaining.setText(String.valueOf(--mCorrectRemaining)
+					+ " Correct Answers Remaining");
 
-			mTap.postInvalidate();
+			if (mCorrectRemaining == 0) {
+				findViewById(R.id.buttons).setVisibility(View.VISIBLE);
+				findViewById(R.id.math).setVisibility(View.GONE);
+				if (mIsOnSnooze)
+					mSnoozeButton.setVisibility(View.VISIBLE);
+				initializeWakeUpButtons();
+			}
+		}
+
+		private void initializeWakeUpButtons() {
+			TextView tvName = (TextView) findViewById(R.id.alarm_screen_buttons_name);
+			TextView tvTime = (TextView) findViewById(R.id.alarm_screen_buttons_time);
+			tvName.setText(name);
+			tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
 		}
 
 	}

@@ -64,6 +64,7 @@ public class MainActivity extends ActionBarActivity {
 							Intent intent = new Intent(MainActivity.this,
 									AlarmsActivity.class);
 							startActivity(intent);
+						
 						} catch (InterruptedException ex) {
 						}
 					}
@@ -109,7 +110,7 @@ public class MainActivity extends ActionBarActivity {
 							}
 
 							Intent intent = new Intent(MainActivity.this,
-									AlarmScreenMathActivity.class);
+									AlarmScreenWordActivity.class);
 							startActivity(intent);
 						} catch (InterruptedException ex) {
 						}

@@ -2,17 +2,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   	android:background="@drawable/background"
-   	android:padding="@dimen/activity_horizontal_margin"
-    tools:context="com.martyawesome.smartyalarm.activities.AlarmsActivity" >
-	
+    android:background="@color/colorScheme"
+    android:padding="@dimen/activity_horizontal_margin" >
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@android:color/white" >
+        android:padding="@dimen/activity_small_horizontal_margin"
+        android:divider="@android:color/white"
+        android:dividerHeight="@dimen/divider"
+        android:background="@drawable/textlines_with_border" >
     </ListView>
 
     <TextView

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/activity_small_horizontal_margin"
-    android:background="@color/dirtyWhite"
+    android:background="@drawable/textlines_item_list"
     android:padding="@dimen/activity_small_horizontal_margin" >
 
     <TextView

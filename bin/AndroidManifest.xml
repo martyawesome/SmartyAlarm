@@ -62,11 +62,18 @@
 
         <activity
             android:name="com.martyawesome.smartyalarm.activities.AlarmScreenCircleActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.martyawesome.smartyalarm.activities.AlarmScreenMathActivity"
-            android:label="@string/title_activity_alarm_screen_math" >
+            android:label="@string/app_name"
+             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.martyawesome.smartyalarm.activities.AlarmScreenWordActivity"
+            android:label="@string/app_name"
+             android:screenOrientation="portrait" >
         </activity>
     </application>
 

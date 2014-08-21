@@ -2,7 +2,6 @@ package com.martyawesome.smartyalarm.activities;
 
 import java.util.Random;
 
-import android.R.array;
 import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
@@ -53,6 +52,8 @@ public class AlarmScreenMathActivity extends Activity {
 	TextView mValue2;
 	TextView mOperator;
 	TextView mSolveRemaining;
+	TextView mTvName;
+	TextView mTvTime;
 	EditText mGetAnswer;
 	String[] mMathOperators;
 	String name;
@@ -62,10 +63,12 @@ public class AlarmScreenMathActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_alarm_screen_math);
+		setContentView(R.layout.activity_alarm_screen);
 
-		findViewById(R.id.math_buttons).setVisibility(View.GONE);
-		findViewById(R.id.math_solve).setVisibility(View.VISIBLE);
+		findViewById(R.id.buttons).setVisibility(View.GONE);
+		findViewById(R.id.word).setVisibility(View.GONE);
+		findViewById(R.id.tap).setVisibility(View.GONE);
+		findViewById(R.id.math).setVisibility(View.VISIBLE);
 
 		final long id = getIntent().getLongExtra(AlarmConstants.ID, 0);
 		name = getIntent().getStringExtra(AlarmConstants.NAME);
@@ -74,9 +77,9 @@ public class AlarmScreenMathActivity extends Activity {
 		String tone = getIntent().getStringExtra(AlarmConstants.TONE);
 		mIsOnSnooze = getIntent().getBooleanExtra(AlarmConstants.SNOOZE, false);
 
-		TextView tvName = (TextView) findViewById(R.id.alarm_screen_name);
-		TextView tvTime = (TextView) findViewById(R.id.alarm_screen_time);
-		mSolveRemaining = (TextView) findViewById(R.id.math_corrent);
+		mTvName = (TextView) findViewById(R.id.alarm_screen_name_math);
+		mTvTime = (TextView) findViewById(R.id.alarm_screen_time_math);
+		mSolveRemaining = (TextView) findViewById(R.id.math_correct);
 		mValue1 = (TextView) findViewById(R.id.math_value_1);
 		mValue2 = (TextView) findViewById(R.id.math_value_2);
 		mOperator = (TextView) findViewById(R.id.math_operator);
@@ -85,14 +88,13 @@ public class AlarmScreenMathActivity extends Activity {
 
 		mMathOperators = getResources().getStringArray(R.array.math_operators);
 
-		tvName.setText(name);
-		tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
-
+		mTvName.setText(name);
+		mTvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
+		
 		createMediaPlayer(tone);
 		listeners(id);
 
 		Runnable releaseWakelock = createWakeLock();
-
 		new Handler().postDelayed(releaseWakelock, WAKELOCK_TIMEOUT);
 	}
 
@@ -298,17 +300,21 @@ public class AlarmScreenMathActivity extends Activity {
 					+ " Correct Answers Remaining");
 			
 			if(mCorrectRemaining == 0){
-				findViewById(R.id.math_buttons).setVisibility(
+				findViewById(R.id.buttons).setVisibility(
 						View.VISIBLE);
-				findViewById(R.id.math_solve).setVisibility(
+				findViewById(R.id.math).setVisibility(
 						View.GONE);
 				if (mIsOnSnooze)
 					mSnoozeButton.setVisibility(View.VISIBLE);
-				TextView tvName = (TextView) findViewById(R.id.alarm_screen_name_math_buttons);
-				TextView tvTime = (TextView) findViewById(R.id.alarm_screen_time_math_buttons);
-				tvName.setText(name);
-				tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
+				initializeWakeUpButtons();
 			}
+		}
+
+		private void initializeWakeUpButtons() {
+			TextView tvName = (TextView) findViewById(R.id.alarm_screen_buttons_name);
+			TextView tvTime = (TextView) findViewById(R.id.alarm_screen_buttons_time);
+			tvName.setText(name);
+			tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
 		}
 
 	}

@@ -116,8 +116,6 @@ public class AlarmsActivity extends ListActivity {
 						if (dbHelper.getMaxId() > 0) {
 							// Set the alarms
 							AlarmManagerHelper.setAlarms(mContext);
-							if (!dbHelper.checkIfAllAreEnabled())
-								mNotificationManager.cancelAll();
 						}
 
 						

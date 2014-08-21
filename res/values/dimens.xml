@@ -8,5 +8,6 @@
     <dimen name="activity_very_small_vertical_margin">5dp</dimen>
     <dimen name="activity_very_small_horizontal_margin">5dp</dimen>
     <dimen name="tap">30dp</dimen>
+    <dimen name="divider">10dp</dimen>
 
 </resources>

@@ -6,7 +6,7 @@
     android:padding="@dimen/activity_horizontal_margin" >
 
     <LinearLayout
-        android:id="@+id/alarm_details_tap"
+        android:id="@+id/alarm_details_word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -23,7 +23,7 @@
             android:textSize="26sp" />
 
         <TextView
-            android:id="@+id/alarm_screen_name_tap"
+            android:id="@+id/alarm_screen_name_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_very_small_horizontal_margin"
@@ -32,7 +32,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/alarm_screen_time_tap"
+            android:id="@+id/alarm_screen_time_word"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -41,50 +41,52 @@
             android:textSize="65sp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/tap_layout"
+    <TextView
+        android:id="@+id/word_correct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/alarm_details_tap"
+        android:layout_below="@+id/alarm_details_word"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/circle_med"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_small_horizontal_margin" >
-
-        <TextView
-            android:id="@+id/alarm_tap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tap_me"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/alarm_tap_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/alarm_tap_more"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tap_more"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
-    </LinearLayout>
-    
-    <TextView
-        android:id="@+id/time_remaining_taptap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tap_layout"
-        android:gravity="center_horizontal"
-        android:text="@string/timer"
         android:textColor="@color/darkGray"
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/word_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/word_correct"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@color/colorScheme"
+        android:gravity="center"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textColor="@android:color/white"
+        android:textSize="40sp" />
+
+    <EditText
+        android:id="@+id/answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/word_textView"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/answer_hint"
+        android:inputType="text"
+        android:textSize="18sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/answer"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="@string/submit" />
 
 </RelativeLayout>

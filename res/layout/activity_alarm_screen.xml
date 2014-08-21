@@ -1,73 +1,25 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vf"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/colorScheme"
+    android:gravity="center"
     android:padding="@dimen/activity_horizontal_margin" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/white"
-        android:padding="@dimen/activity_horizontal_margin" >
+    <include
+        android:id="@+id/math"
+        layout="@layout/activity_alarm_screen_math" />
 
-        <TextView
-            android:id="@+id/alarm_screen_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="28dp"
-            android:text="Alarm!"
-            android:textColor="@color/darkGray"
-            android:textSize="38dp" />
+    <include
+        android:id="@+id/word"
+        layout="@layout/activity_alarm_screen_word" />
+    
+    <include
+        android:id="@+id/tap"
+        layout="@layout/activity_alarm_screen_circle" />
+    
+    <include
+        android:id="@+id/buttons"
+        layout="@layout/activity_alarm_screen_buttons" />
 
-        <TextView
-            android:id="@+id/alarm_screen_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/alarm_screen_time"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="28dp"
-            android:text="Alarm name"
-            android:textColor="@color/darkGray" />
-
-        <TextView
-            android:id="@+id/alarm_screen_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/alarm_screen_title"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="27dp"
-            android:gravity="center_horizontal"
-            android:text="00 : 00"
-            android:textColor="@color/darkGray"
-            android:textSize="52dp" />
-
-        <Button
-            android:id="@+id/alarm_screen_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/alarm_screen_name"
-            android:layout_marginTop="36dp"
-            android:padding="@dimen/activity_small_horizontal_margin"
-            android:text="Dismiss"
-            android:textSize="25dp" />
-
-        <Button
-            android:id="@+id/alarm_snooze"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/alarm_screen_name"
-            android:layout_toLeftOf="@+id/alarm_screen_button"
-            android:layout_marginTop="36dp"
-            android:padding="@dimen/activity_small_horizontal_margin"
-            android:text="@string/snooze"
-            android:textSize="25dp" />
-    </RelativeLayout>
-
-</RelativeLayout>
+</ViewFlipper>

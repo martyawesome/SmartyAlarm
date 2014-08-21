@@ -8,6 +8,7 @@ import android.os.IBinder;
 
 import com.martyawesome.smartyalarm.activities.AlarmScreenCircleActivity;
 import com.martyawesome.smartyalarm.activities.AlarmScreenMathActivity;
+import com.martyawesome.smartyalarm.activities.AlarmScreenWordActivity;
 
 public class AlarmService extends Service {
 
@@ -22,7 +23,7 @@ public class AlarmService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
 		Random random = new Random();
-		int randomNum = random.nextInt(2);
+		int randomNum = random.nextInt(3);
 
 		Intent intentPass = null;
 		switch (randomNum) {
@@ -33,6 +34,10 @@ public class AlarmService extends Service {
 		case 1:
 			intentPass = new Intent(getBaseContext(),
 					AlarmScreenMathActivity.class);
+			break;
+		case 2:
+			intentPass = new Intent(getBaseContext(),
+					AlarmScreenWordActivity.class);
 			break;
 		}
 

@@ -1,9 +1,118 @@
-<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/vf"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/textlines_with_border"
+    android:padding="@dimen/activity_horizontal_margin" >
 
-    <include android:id="@+id/math_solve" layout="@layout/activity_alarm_screen_math_solve" />
-    <include android:id="@+id/math_buttons" layout="@layout/activity_alarm_screen_math_buttons" />
+<LinearLayout
+        android:id="@+id/alarm_details_math"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_very_small_horizontal_margin" >
 
-</ViewFlipper>
+        <TextView
+            android:id="@+id/alarm_screen_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_small_horizontal_margin"
+            android:text="@string/alarm"
+            android:textColor="@color/darkGray"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/alarm_screen_name_math"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_very_small_horizontal_margin"
+            android:text="@string/initial_name"
+            android:textColor="@color/darkGray"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/alarm_screen_time_math"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/initial_time"
+            android:textColor="@color/darkGray"
+            android:textSize="65sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/math_correct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_details_math"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:text="@string/answers_remaining"
+        android:textColor="@color/darkGray"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:id="@+id/math_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/math_correct"
+        android:layout_margin="@dimen/activity_small_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:background="@color/colorScheme"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_small_horizontal_margin" >
+
+        <TextView
+            android:id="@+id/math_value_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/math_value"
+            android:textColor="@android:color/white"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/math_operator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:textColor="@android:color/white"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/math_value_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:text="@string/math_value"
+            android:textColor="@android:color/white"
+            android:textSize="40sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/sum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/math_container"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/answer_hint"
+        android:inputType="number"
+        android:textSize="18sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/math_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sum"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="@string/submit" />
+
+</RelativeLayout>

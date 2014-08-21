@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    android:weightSum="1"
-    tools:context="com.martyawesome.smartyalarm.MainActivity$PlaceholderFragment" >
+    android:weightSum="1" >
 
     <LinearLayout
         android:layout_width="match_parent"

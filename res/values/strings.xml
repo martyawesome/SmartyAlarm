@@ -63,8 +63,40 @@
         <item>*</item>
     </string-array>
 
+    <!-- AlarmScreenWordActivity -->
+    <string-array name="alphabet">
+        <item>a</item>
+        <item>b</item>
+        <item>c</item>
+        <item>d</item>
+        <item>e</item>
+        <item>f</item>
+        <item>g</item>
+        <item>h</item>
+        <item>i</item>
+        <item>j</item>
+        <item>k</item>
+        <item>l</item>
+        <item>m</item>
+        <item>n</item>
+        <item>o</item>
+        <item>p</item>
+        <item>q</item>
+        <item>r</item>
+        <item>s</item>
+        <item>t</item>
+        <item>u</item>
+        <item>v</item>
+        <item>w</item>
+        <item>x</item>
+        <item>y</item>
+        <item>z</item>
+    </string-array>
+    
+    <!-- Alarm Screen General -->
     <string name="answer_hint">Answer Here</string>
     <string name="submit">Submit</string>
+    <string name="answers_remaining">Correct Answers Remaining</string>
 
     <!-- Notification -->
     <string name="notif_title">Alarm set!</string>
@@ -73,5 +105,6 @@
 
     <!-- Errors -->
     <string name="empty_edit_text">Please enter a value</string>
+    <string name="title_activity_alarm_screen_word">AlarmScreenWordActivity</string>
 
 </resources>
