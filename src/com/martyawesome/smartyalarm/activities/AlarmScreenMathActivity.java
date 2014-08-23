@@ -72,6 +72,7 @@ public class AlarmScreenMathActivity extends Activity {
 		findViewById(R.id.word).setVisibility(View.GONE);
 		findViewById(R.id.tap).setVisibility(View.GONE);
 		findViewById(R.id.math).setVisibility(View.VISIBLE);
+		findViewById(R.id.wakeathon).setVisibility(View.GONE);
 
 		final long id = getIntent().getLongExtra(AlarmConstants.ID, 0);
 		name = getIntent().getStringExtra(AlarmConstants.NAME);
@@ -108,7 +109,16 @@ public class AlarmScreenMathActivity extends Activity {
 		mMathOperators = getResources().getStringArray(R.array.math_operators);
 
 		mTvName.setText(name);
-		mTvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
+		if (mTimeHour > 12) {
+			mTvTime.setText(String.format("%02d : %02d pm", mTimeHour - 12,
+					mTimeMinute));
+		} else if (mTimeHour < 12) {
+			mTvTime.setText(String.format("%02d : %02d am", mTimeHour,
+					mTimeMinute));
+		} else {
+			mTvTime.setText(String.format("%02d : %02d pm", mTimeHour,
+					mTimeMinute));
+		}
 
 		createMediaPlayer(tone);
 		listeners(id);
@@ -331,7 +341,16 @@ public class AlarmScreenMathActivity extends Activity {
 			TextView tvName = (TextView) findViewById(R.id.alarm_screen_buttons_name);
 			TextView tvTime = (TextView) findViewById(R.id.alarm_screen_buttons_time);
 			tvName.setText(name);
-			tvTime.setText(String.format("%02d : %02d", mTimeHour, mTimeMinute));
+			if (mTimeHour > 12) {
+				tvTime.setText(String.format("%02d : %02d pm", mTimeHour - 12,
+						mTimeMinute));
+			} else if (mTimeHour < 12) {
+				tvTime.setText(String.format("%02d : %02d am", mTimeHour - 12,
+						mTimeMinute));
+			} else {
+				tvTime.setText(String.format("%02d : %02d pm", mTimeHour - 12,
+						mTimeMinute));
+			}
 			mDismissButton.setTypeface(tf);
 			mSnoozeButton.setTypeface(tf);
 			tvName.setTypeface(tf);

@@ -3,15 +3,16 @@ package com.martyawesome.smartyalarm.database;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.martyawesome.smartyalarm.AlarmConstants;
-import com.martyawesome.smartyalarm.AlarmObject;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+
+import com.martyawesome.smartyalarm.AlarmConstants;
+import com.martyawesome.smartyalarm.AlarmObject;
+import com.martyawesome.smartyalarm.ChallengeObject;
 
 public class AlarmDBHelper extends SQLiteOpenHelper {
 
@@ -32,6 +33,14 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 			+ AlarmConstants.COLUMN_NAME_ALARM_SNOOZE + " BOOLEAN,"
 			+ AlarmConstants.COLUMN_NAME_ALARM_SNOOZE_TIME + " INTEGER" + " )";
 
+	private static final String SQL_CREATE_CHALLENGES = "CREATE TABLE "
+			+ AlarmConstants.TABLE_NAME_CHALLENGES + " ("
+			+ AlarmConstants.COLUMN_NAME_CHALLENGE_ID
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
+			+ AlarmConstants.COLUMN_NAME_CHALLENGE_NAME + " TEXT,"
+			+ AlarmConstants.COLUMN_NAME_CHALLENGE_IS_ENABLED + " BOOLEAN"
+			+ " )";
+
 	private static final String SQL_DELETE_ALARM = "DROP TABLE IF EXISTS "
 			+ AlarmConstants.TABLE_NAME;
 
@@ -42,6 +51,7 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(SQL_CREATE_ALARM);
+		db.execSQL(SQL_CREATE_CHALLENGES);
 	}
 
 	@Override
@@ -119,11 +129,43 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 		return values;
 	}
 
+	private ChallengeObject populateChallengeObject(Cursor c) {
+		ChallengeObject object = new ChallengeObject();
+
+		object.id = c.getInt(c
+				.getColumnIndex(AlarmConstants.COLUMN_NAME_CHALLENGE_ID));
+		object.name = c.getString(c
+				.getColumnIndex(AlarmConstants.COLUMN_NAME_CHALLENGE_NAME));
+		object.isEnabled = c
+				.getInt(c
+						.getColumnIndex(AlarmConstants.COLUMN_NAME_CHALLENGE_IS_ENABLED)) == 0 ? false
+				: true;
+
+		return object;
+	}
+
 	public void createAlarm(AlarmObject object) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = populateContent(object);
 		db.insert(AlarmConstants.TABLE_NAME, null, values);
+		db.close(); // Closing database connection
+	}
+
+	public void createChallenges(ChallengeObject[] challengeObject) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		for (int i = 0; i < challengeObject.length; i++) {
+			ContentValues values = new ContentValues();
+			values.put(AlarmConstants.COLUMN_NAME_CHALLENGE_ID,
+					challengeObject[i].id);
+			values.put(AlarmConstants.COLUMN_NAME_CHALLENGE_NAME,
+					challengeObject[i].name);
+			values.put(AlarmConstants.COLUMN_NAME_CHALLENGE_IS_ENABLED,
+					challengeObject[i].isEnabled);
+			db.insert(AlarmConstants.TABLE_NAME_CHALLENGES, null, values);
+		}
+
 		db.close(); // Closing database connection
 	}
 
@@ -142,6 +184,22 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 		db.close();
 		return null;
 	}
+	
+	public ChallengeObject getChallenge(int id) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		String select = "SELECT * FROM " + AlarmConstants.TABLE_NAME_CHALLENGES
+				+ " WHERE " + AlarmConstants.COLUMN_NAME_CHALLENGE_ID + " = " + id;
+
+		Cursor c = db.rawQuery(select, null);
+
+		if (c.moveToNext()) {
+			return populateChallengeObject(c);
+		}
+
+		db.close();
+		return null;
+	}
 
 	public void updateAlarm(AlarmObject object) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -149,6 +207,23 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 		ContentValues values = populateContent(object);
 		db.update(AlarmConstants.TABLE_NAME, values,
 				AlarmConstants.COLUMN_NAME_ALARM_ID + " = ?",
+				new String[] { String.valueOf(object.id) });
+		db.close();
+	}
+	
+	public void updateChallenge(ChallengeObject object) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+		values.put(AlarmConstants.COLUMN_NAME_CHALLENGE_ID,
+				object.id);
+		values.put(AlarmConstants.COLUMN_NAME_CHALLENGE_NAME,
+				object.name);
+		values.put(AlarmConstants.COLUMN_NAME_CHALLENGE_IS_ENABLED,
+				object.isEnabled);
+		
+		db.update(AlarmConstants.TABLE_NAME_CHALLENGES, values,
+				AlarmConstants.COLUMN_NAME_CHALLENGE_ID + " = ?",
 				new String[] { String.valueOf(object.id) });
 		db.close();
 	}
@@ -182,13 +257,62 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 		return null;
 	}
 
-	public int getMaxId() {
+	public List<ChallengeObject> getChallenges() {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		String select = "SELECT * FROM " + AlarmConstants.TABLE_NAME_CHALLENGES;
+
+		Cursor c = db.rawQuery(select, null);
+
+		List<ChallengeObject> challengeList = new ArrayList<ChallengeObject>();
+
+		while (c.moveToNext()) {
+			challengeList.add(populateChallengeObject(c));
+		}
+
+		if (!challengeList.isEmpty()) {
+			return challengeList;
+		}
+
+		db.close();
+		return null;
+	}
+	
+	public List<ChallengeObject> getEnabledChallenges() {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		String select = "SELECT * FROM " + AlarmConstants.TABLE_NAME_CHALLENGES
+				+ " WHERE " + AlarmConstants.COLUMN_NAME_CHALLENGE_IS_ENABLED + " = "
+				+ 1;
+
+		Cursor c = db.rawQuery(select, null);
+
+		List<ChallengeObject> challengeList = new ArrayList<ChallengeObject>();
+
+		while (c.moveToNext()) {
+			challengeList.add(populateChallengeObject(c));
+		}
+
+		if (!challengeList.isEmpty()) {
+			return challengeList;
+		}
+
+		db.close();
+		return null;
+	}
+
+	public int getMaxId(String tableName) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		String query = null;
 
-		query = "SELECT MAX(" + AlarmConstants.COLUMN_NAME_ALARM_ID + ") AS"
-				+ AlarmConstants.COLUMN_NAME_ALARM_ID + " FROM "
-				+ AlarmConstants.TABLE_NAME;
+		if (tableName.equals(AlarmConstants.TABLE_NAME))
+			query = "SELECT MAX(" + AlarmConstants.COLUMN_NAME_ALARM_ID
+					+ ") AS" + AlarmConstants.COLUMN_NAME_ALARM_ID + " FROM "
+					+ AlarmConstants.TABLE_NAME;
+		else if(tableName.equals(AlarmConstants.TABLE_NAME_CHALLENGES))
+			query = "SELECT MAX(" + AlarmConstants.COLUMN_NAME_CHALLENGE_ID
+					+ ") AS" + AlarmConstants.COLUMN_NAME_CHALLENGE_ID + " FROM "
+					+ AlarmConstants.TABLE_NAME_CHALLENGES;
 		Cursor cursor = db.rawQuery(query, null);
 
 		int id = 0;
@@ -209,12 +333,11 @@ public class AlarmDBHelper extends SQLiteOpenHelper {
 				+ 1;
 
 		Cursor c = db.rawQuery(select, null);
-		
+
 		if (c != null && c.getCount() > 0) {
 			db.close();
 			return true;
-		}
-		else{
+		} else {
 			db.close();
 			return false;
 		}

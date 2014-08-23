@@ -175,7 +175,7 @@ public class AlarmDetailsActivity extends Activity {
 			AlarmManagerHelper.cancelAlarms(this);
 
 			if (mAlarmObject.id <= 0) {
-				mAlarmObject.id = dbHelper.getMaxId() + 1;
+				mAlarmObject.id = dbHelper.getMaxId(AlarmConstants.TABLE_NAME) + 1;
 				dbHelper.createAlarm(mAlarmObject);
 				Toast.makeText(
 						AlarmDetailsActivity.this,

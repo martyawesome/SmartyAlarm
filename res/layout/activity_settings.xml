@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorScheme" >
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:background="@drawable/textlines_with_border"
+        android:divider="@android:color/white"
+        android:dividerHeight="@dimen/divider"
+        android:padding="@dimen/activity_small_horizontal_margin" >
+    </ListView>
+
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@android:id/empty"
+        android:text="Empty"
+        />
+
+</RelativeLayout>

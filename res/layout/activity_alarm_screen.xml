@@ -19,6 +19,10 @@
         layout="@layout/activity_alarm_screen_circle" />
     
     <include
+        android:id="@+id/wakeathon"
+        layout="@layout/activity_alarm_screen_wakeathon" />
+    
+    <include
         android:id="@+id/buttons"
         layout="@layout/activity_alarm_screen_buttons" />
 

@@ -10,17 +10,18 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name="com.martyawesome.smartyalarm.activities.MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-        </activity>
         <activity
             android:name="com.martyawesome.smartyalarm.activities.AlarmsActivity"
             android:label="@string/app_name"
@@ -39,11 +40,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.martyawesome.smartyalarm.activities.AlarmsActivity" />
-        </activity>
-        <activity
-            android:name="com.martyawesome.smartyalarm.activities.AlarmScreenActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
         </activity>
 
         <receiver android:name="com.martyawesome.smartyalarm.services.AlarmManagerHelper" >
@@ -71,6 +67,19 @@
             android:name="com.martyawesome.smartyalarm.activities.AlarmScreenWordActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.martyawesome.smartyalarm.activities.AlarmScreenWakeathonActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.martyawesome.smartyalarm.activities.SettingsActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName="com.martyawesome.smartyalarm.activities.AlarmsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.martyawesome.smartyalarm.activities.AlarmsActivity" />
         </activity>
     </application>
 

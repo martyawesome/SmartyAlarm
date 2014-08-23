@@ -8,9 +8,16 @@
     <string name="action_help">Help</string>
     <string name="no_alarms">You have no alarms. Click the add an alarm icon in the action bar! :)</string>
     <string name="initial_date">1 April 2004</string>
+    <string name="challengeEnabledOne">At least one should be checked</string>
+
+    <!-- Challenges -->
+    <string name="taptap">Tap Tap</string>
+    <string name="math">Math in the Morning</string>
+    <string name="word">Repeat the Words</string>
+    <string name="wakeathon">Wakeathon</string>
 
     <!-- Add Alarm -->
-	<string name="create_new_alarm">Create New Alarm</string>
+    <string name="create_new_alarm">Create New Alarm</string>
     <string name="details_alarm_name">Alarm Name</string>
     <string name="details_repeat_weekly">Repeat Weekly</string>
     <string name="details_sunday">Sunday</string>
@@ -94,7 +101,15 @@
         <item>y</item>
         <item>z</item>
     </string-array>
-    
+
+    <!-- AlarmScreenWakeathon -->
+    <string name="walk">Start walking to disable the alarm! </string>
+    <string name="wake_up">Are you starting to wake up?</string>
+    <string name="keep_walking">Just a little more, my friend; appreciate the new day! :)</string>
+    <string name="shake">Now shake the device until the alarm turns off</string>
+    <string name="walk_start">Click here \nto start </string>
+    <string name="three_meters">3 meters remaining</string>
+
     <!-- Alarm Screen General -->
     <string name="answer_hint">Answer Here</string>
     <string name="submit">Submit</string>
@@ -108,5 +123,7 @@
     <!-- Errors -->
     <string name="empty_edit_text">Please enter a value</string>
     <string name="title_activity_alarm_screen_word">AlarmScreenWordActivity</string>
+    <string name="title_activity_alarm_screen_wakeathon">AlarmScreenWakeathonActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>

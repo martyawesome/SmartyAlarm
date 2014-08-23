@@ -1109,16 +1109,17 @@ containing a value of this type.
         public static final int ic_action_save=0x7f020060;
         public static final int ic_action_settings=0x7f020061;
         public static final int ic_launcher=0x7f020062;
-        public static final int ic_stat_alarm=0x7f020063;
-        public static final int ic_toggle_off=0x7f020064;
-        public static final int ic_toggle_on=0x7f020065;
-        public static final int textlines_item_list=0x7f020066;
-        public static final int textlines_with_border=0x7f020067;
-        public static final int toggle_button=0x7f020068;
-        public static final int view_touch_selector=0x7f020069;
+        public static final int ic_rotate=0x7f020063;
+        public static final int ic_stat_alarm=0x7f020064;
+        public static final int ic_toggle_off=0x7f020065;
+        public static final int ic_toggle_on=0x7f020066;
+        public static final int textlines_item_list=0x7f020067;
+        public static final int textlines_with_border=0x7f020068;
+        public static final int toggle_button=0x7f020069;
+        public static final int view_touch_selector=0x7f02006a;
     }
     public static final class id {
-        public static final int about=0x7f050088;
+        public static final int about=0x7f050092;
         public static final int action_bar=0x7f05001c;
         public static final int action_bar_activity_content=0x7f050015;
         public static final int action_bar_container=0x7f05001b;
@@ -1130,75 +1131,84 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_save_alarm_details=0x7f050082;
-        public static final int action_settings=0x7f050083;
+        public static final int action_save_alarm_details=0x7f05008c;
+        public static final int action_settings=0x7f05008d;
         public static final int activity_chooser_view_content=0x7f050025;
-        public static final int add_alarm=0x7f050084;
-        public static final int alarm_details=0x7f050041;
-        public static final int alarm_details_math=0x7f050052;
-        public static final int alarm_details_name=0x7f050064;
-        public static final int alarm_details_repeat_friday=0x7f05006d;
-        public static final int alarm_details_repeat_monday=0x7f050069;
-        public static final int alarm_details_repeat_saturday=0x7f05006e;
-        public static final int alarm_details_repeat_sunday=0x7f050068;
-        public static final int alarm_details_repeat_thursday=0x7f05006c;
-        public static final int alarm_details_repeat_tuesday=0x7f05006a;
-        public static final int alarm_details_repeat_wednesday=0x7f05006b;
-        public static final int alarm_details_repeat_weekly=0x7f050066;
-        public static final int alarm_details_tap=0x7f050049;
-        public static final int alarm_details_time_picker=0x7f050063;
-        public static final int alarm_details_word=0x7f05005c;
-        public static final int alarm_dismiss=0x7f050047;
-        public static final int alarm_item_friday=0x7f05007e;
-        public static final int alarm_item_monday=0x7f05007a;
-        public static final int alarm_item_name=0x7f050078;
-        public static final int alarm_item_saturday=0x7f05007f;
-        public static final int alarm_item_sunday=0x7f050079;
-        public static final int alarm_item_thursday=0x7f05007d;
-        public static final int alarm_item_time=0x7f050076;
-        public static final int alarm_item_time_day=0x7f050077;
-        public static final int alarm_item_toggle=0x7f050081;
-        public static final int alarm_item_tuesday=0x7f05007b;
-        public static final int alarm_item_wednesday=0x7f05007c;
-        public static final int alarm_label_tone=0x7f050071;
-        public static final int alarm_label_tone_selection=0x7f050072;
-        public static final int alarm_ringtone_container=0x7f050070;
-        public static final int alarm_screen_buttons_name=0x7f050043;
-        public static final int alarm_screen_buttons_time=0x7f050044;
-        public static final int alarm_screen_buttons_title=0x7f050042;
-        public static final int alarm_screen_name_math=0x7f050053;
-        public static final int alarm_screen_name_tap=0x7f05004b;
-        public static final int alarm_screen_name_word=0x7f05005d;
-        public static final int alarm_screen_time_math=0x7f050054;
-        public static final int alarm_screen_time_tap=0x7f05004c;
-        public static final int alarm_screen_time_word=0x7f05005e;
-        public static final int alarm_screen_title=0x7f05004a;
-        public static final int alarm_snooze=0x7f050048;
-        public static final int alarm_tap=0x7f05004e;
-        public static final int alarm_tap_more=0x7f050050;
-        public static final int alarm_tap_number=0x7f05004f;
-        public static final int alarm_time_left=0x7f050080;
+        public static final int add_alarm=0x7f05008e;
+        public static final int alarm_details=0x7f050042;
+        public static final int alarm_details_math=0x7f050053;
+        public static final int alarm_details_name=0x7f05006c;
+        public static final int alarm_details_repeat_friday=0x7f050075;
+        public static final int alarm_details_repeat_monday=0x7f050071;
+        public static final int alarm_details_repeat_saturday=0x7f050076;
+        public static final int alarm_details_repeat_sunday=0x7f050070;
+        public static final int alarm_details_repeat_thursday=0x7f050074;
+        public static final int alarm_details_repeat_tuesday=0x7f050072;
+        public static final int alarm_details_repeat_wednesday=0x7f050073;
+        public static final int alarm_details_repeat_weekly=0x7f05006e;
+        public static final int alarm_details_tap=0x7f05004a;
+        public static final int alarm_details_time_picker=0x7f05006b;
+        public static final int alarm_details_wakeathon=0x7f05005d;
+        public static final int alarm_details_word=0x7f050064;
+        public static final int alarm_dismiss=0x7f050048;
+        public static final int alarm_item_friday=0x7f050086;
+        public static final int alarm_item_monday=0x7f050082;
+        public static final int alarm_item_name=0x7f050080;
+        public static final int alarm_item_saturday=0x7f050087;
+        public static final int alarm_item_sunday=0x7f050081;
+        public static final int alarm_item_thursday=0x7f050085;
+        public static final int alarm_item_time=0x7f05007e;
+        public static final int alarm_item_time_day=0x7f05007f;
+        public static final int alarm_item_toggle=0x7f050089;
+        public static final int alarm_item_tuesday=0x7f050083;
+        public static final int alarm_item_wednesday=0x7f050084;
+        public static final int alarm_label_tone=0x7f050079;
+        public static final int alarm_label_tone_selection=0x7f05007a;
+        public static final int alarm_ringtone_container=0x7f050078;
+        public static final int alarm_screen_buttons_name=0x7f050044;
+        public static final int alarm_screen_buttons_time=0x7f050045;
+        public static final int alarm_screen_buttons_title=0x7f050043;
+        public static final int alarm_screen_message=0x7f050060;
+        public static final int alarm_screen_name_math=0x7f050054;
+        public static final int alarm_screen_name_tap=0x7f05004c;
+        public static final int alarm_screen_name_wakeathon=0x7f05005e;
+        public static final int alarm_screen_name_word=0x7f050065;
+        public static final int alarm_screen_shake_imageView=0x7f050063;
+        public static final int alarm_screen_start_wakeathon=0x7f050062;
+        public static final int alarm_screen_time_math=0x7f050055;
+        public static final int alarm_screen_time_tap=0x7f05004d;
+        public static final int alarm_screen_time_wakeathon=0x7f05005f;
+        public static final int alarm_screen_time_wakeathon_distance_remaining=0x7f050061;
+        public static final int alarm_screen_time_word=0x7f050066;
+        public static final int alarm_screen_title=0x7f05004b;
+        public static final int alarm_snooze=0x7f050049;
+        public static final int alarm_tap=0x7f05004f;
+        public static final int alarm_tap_more=0x7f050051;
+        public static final int alarm_tap_number=0x7f050050;
+        public static final int alarm_time_left=0x7f050088;
         public static final int always=0x7f05000b;
-        public static final int answer=0x7f050061;
+        public static final int answer=0x7f050069;
         public static final int beginning=0x7f050011;
-        public static final int buttons=0x7f050040;
+        public static final int buttons=0x7f050041;
+        public static final int challenge_item_name=0x7f05008a;
+        public static final int checkBox1=0x7f05008b;
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
-        public static final int constants=0x7f050046;
+        public static final int constants=0x7f050047;
         public static final int default_activity_button=0x7f050028;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
-        public static final int divider1=0x7f050067;
-        public static final int divider2=0x7f050065;
-        public static final int divider3=0x7f050073;
-        public static final int divider4=0x7f05006f;
-        public static final int drop_down=0x7f050085;
+        public static final int divider1=0x7f05006f;
+        public static final int divider2=0x7f05006d;
+        public static final int divider3=0x7f05007b;
+        public static final int divider4=0x7f050077;
+        public static final int drop_down=0x7f05008f;
         public static final int dropdown=0x7f05000f;
         public static final int edit_query=0x7f050030;
         public static final int end=0x7f050013;
         public static final int expand_activities_button=0x7f050026;
         public static final int expanded_menu=0x7f05002c;
-        public static final int help=0x7f050087;
+        public static final int help=0x7f050091;
         public static final int home=0x7f050014;
         public static final int homeAsUp=0x7f050005;
         public static final int icon=0x7f05002a;
@@ -1207,14 +1217,14 @@ containing a value of this type.
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
         public static final int math=0x7f05003d;
-        public static final int math_container=0x7f050056;
-        public static final int math_correct=0x7f050055;
-        public static final int math_operator=0x7f050058;
-        public static final int math_submit=0x7f05005b;
-        public static final int math_value_1=0x7f050057;
-        public static final int math_value_2=0x7f050059;
+        public static final int math_container=0x7f050057;
+        public static final int math_correct=0x7f050056;
+        public static final int math_operator=0x7f050059;
+        public static final int math_submit=0x7f05005c;
+        public static final int math_value_1=0x7f050058;
+        public static final int math_value_2=0x7f05005a;
         public static final int middle=0x7f050012;
-        public static final int motivational_quote=0x7f050045;
+        public static final int motivational_quote=0x7f050046;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
@@ -1231,30 +1241,31 @@ containing a value of this type.
         public static final int search_plate=0x7f050036;
         public static final int search_src_text=0x7f050037;
         public static final int search_voice_btn=0x7f05003b;
-        public static final int settings=0x7f050086;
+        public static final int settings=0x7f050090;
         public static final int shortcut=0x7f05002e;
         public static final int showCustom=0x7f050007;
         public static final int showHome=0x7f050004;
         public static final int showTitle=0x7f050006;
-        public static final int snooze=0x7f050075;
-        public static final int snooze_container=0x7f050074;
+        public static final int snooze=0x7f05007d;
+        public static final int snooze_container=0x7f05007c;
         public static final int split_action_bar=0x7f05001e;
-        public static final int submit=0x7f050062;
+        public static final int submit=0x7f05006a;
         public static final int submit_area=0x7f050039;
-        public static final int sum=0x7f05005a;
+        public static final int sum=0x7f05005b;
         public static final int tabMode=0x7f050002;
         public static final int tap=0x7f05003f;
-        public static final int tap_layout=0x7f05004d;
-        public static final int time_remaining_taptap=0x7f050051;
+        public static final int tap_layout=0x7f05004e;
+        public static final int time_remaining_taptap=0x7f050052;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
         public static final int vf=0x7f05003c;
+        public static final int wakeathon=0x7f050040;
         public static final int withText=0x7f05000c;
         public static final int word=0x7f05003e;
-        public static final int word_correct=0x7f05005f;
-        public static final int word_textView=0x7f050060;
+        public static final int word_correct=0x7f050067;
+        public static final int word_textView=0x7f050068;
     }
     public static final class integer {
         /**  The maximum number of action buttons that should be permitted within
@@ -1310,19 +1321,23 @@ containing a value of this type.
         public static final int activity_alarm_screen_buttons=0x7f030019;
         public static final int activity_alarm_screen_circle=0x7f03001a;
         public static final int activity_alarm_screen_math=0x7f03001b;
-        public static final int activity_alarm_screen_word=0x7f03001c;
-        public static final int activity_alarms=0x7f03001d;
-        public static final int add_alarm=0x7f03001e;
-        public static final int alarm_list_item=0x7f03001f;
-        public static final int support_simple_spinner_dropdown_item=0x7f030020;
+        public static final int activity_alarm_screen_wakeathon=0x7f03001c;
+        public static final int activity_alarm_screen_word=0x7f03001d;
+        public static final int activity_alarms=0x7f03001e;
+        public static final int activity_settings=0x7f03001f;
+        public static final int add_alarm=0x7f030020;
+        public static final int alarm_list_item=0x7f030021;
+        public static final int challenge_list_item=0x7f030022;
+        public static final int support_simple_spinner_dropdown_item=0x7f030023;
     }
     public static final class menu {
         public static final int add_alarm=0x7f0d0000;
         public static final int alarm_screen_circle=0x7f0d0001;
         public static final int alarm_screen_math=0x7f0d0002;
-        public static final int alarm_screen_word=0x7f0d0003;
-        public static final int alarms=0x7f0d0004;
-        public static final int main=0x7f0d0005;
+        public static final int alarm_screen_wakeathon=0x7f0d0003;
+        public static final int alarm_screen_word=0x7f0d0004;
+        public static final int alarms=0x7f0d0005;
+        public static final int main=0x7f0d0006;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1371,71 +1386,88 @@ containing a value of this type.
         public static final int action_settings=0x7f0a000f;
         /**  Prompt 
          */
-        public static final int add_alarm_success=0x7f0a0028;
-        public static final int alarm=0x7f0a0027;
+        public static final int add_alarm_success=0x7f0a002d;
+        public static final int alarm=0x7f0a002c;
         /**  Alarm Screen General 
          */
-        public static final int answer_hint=0x7f0a003a;
-        public static final int answers_remaining=0x7f0a003c;
+        public static final int answer_hint=0x7f0a0045;
+        public static final int answers_remaining=0x7f0a0047;
         public static final int app_name=0x7f0a000d;
+        public static final int challengeEnabledOne=0x7f0a0014;
         /**  Add Alarm 
          */
-        public static final int create_new_alarm=0x7f0a0014;
-        public static final int dayTimeAM=0x7f0a0033;
-        public static final int dayTimePM=0x7f0a0034;
-        public static final int details_alarm_name=0x7f0a0015;
-        public static final int details_alarm_tone=0x7f0a001e;
-        public static final int details_alarm_tone_default=0x7f0a001f;
-        public static final int details_friday=0x7f0a001c;
-        public static final int details_monday=0x7f0a0018;
-        public static final int details_repeat_weekly=0x7f0a0016;
-        public static final int details_saturday=0x7f0a001d;
-        public static final int details_sunday=0x7f0a0017;
-        public static final int details_thursday=0x7f0a001b;
-        public static final int details_tuesday=0x7f0a0019;
-        public static final int details_wednesday=0x7f0a001a;
+        public static final int create_new_alarm=0x7f0a0019;
+        public static final int dayTimeAM=0x7f0a0038;
+        public static final int dayTimePM=0x7f0a0039;
+        public static final int details_alarm_name=0x7f0a001a;
+        public static final int details_alarm_tone=0x7f0a0023;
+        public static final int details_alarm_tone_default=0x7f0a0024;
+        public static final int details_friday=0x7f0a0021;
+        public static final int details_monday=0x7f0a001d;
+        public static final int details_repeat_weekly=0x7f0a001b;
+        public static final int details_saturday=0x7f0a0022;
+        public static final int details_sunday=0x7f0a001c;
+        public static final int details_thursday=0x7f0a0020;
+        public static final int details_tuesday=0x7f0a001e;
+        public static final int details_wednesday=0x7f0a001f;
         /**  Alarm 
          */
-        public static final int dismiss=0x7f0a0026;
+        public static final int dismiss=0x7f0a002b;
         /**  Errors 
          */
-        public static final int empty_edit_text=0x7f0a0040;
-        public static final int friday=0x7f0a0031;
-        public static final int hello_world=0x7f0a003f;
+        public static final int empty_edit_text=0x7f0a004b;
+        public static final int friday=0x7f0a0036;
+        public static final int hello_world=0x7f0a004a;
         public static final int initial_date=0x7f0a0013;
-        public static final int initial_name=0x7f0a002b;
+        public static final int initial_name=0x7f0a0030;
         /**  Alarm Adapter 
          */
-        public static final int initial_time=0x7f0a002a;
+        public static final int initial_time=0x7f0a002f;
+        public static final int keep_walking=0x7f0a0041;
+        public static final int math=0x7f0a0016;
         /**  AlarmScreenMathActivity 
          */
-        public static final int math_value=0x7f0a0039;
-        public static final int minutes=0x7f0a0022;
-        public static final int monday=0x7f0a002d;
+        public static final int math_value=0x7f0a003e;
+        public static final int minutes=0x7f0a0027;
+        public static final int monday=0x7f0a0032;
         public static final int no_alarms=0x7f0a0012;
         /**  Notification 
          */
-        public static final int notif_title=0x7f0a003d;
-        public static final int off=0x7f0a0025;
-        public static final int on=0x7f0a0024;
-        public static final int saturday=0x7f0a0032;
-        public static final int seconds=0x7f0a0023;
-        public static final int snooze=0x7f0a0021;
-        public static final int snooze_adapter=0x7f0a0035;
-        public static final int submit=0x7f0a003b;
-        public static final int sunday=0x7f0a002c;
+        public static final int notif_title=0x7f0a0048;
+        public static final int off=0x7f0a002a;
+        public static final int on=0x7f0a0029;
+        public static final int saturday=0x7f0a0037;
+        public static final int seconds=0x7f0a0028;
+        public static final int shake=0x7f0a0042;
+        public static final int snooze=0x7f0a0026;
+        public static final int snooze_adapter=0x7f0a003a;
+        public static final int submit=0x7f0a0046;
+        public static final int sunday=0x7f0a0031;
         /**  AlarmScreenCircleActivity 
          */
-        public static final int tap_me=0x7f0a0036;
-        public static final int tap_more=0x7f0a0037;
-        public static final int thursday=0x7f0a0030;
-        public static final int timer=0x7f0a0038;
-        public static final int title_activity_alarm_screen_math=0x7f0a003e;
-        public static final int title_activity_alarm_screen_word=0x7f0a0041;
-        public static final int tuesday=0x7f0a002e;
-        public static final int untitled=0x7f0a0020;
-        public static final int update_alarm_success=0x7f0a0029;
-        public static final int wednesday=0x7f0a002f;
+        public static final int tap_me=0x7f0a003b;
+        public static final int tap_more=0x7f0a003c;
+        /**  Challenges 
+         */
+        public static final int taptap=0x7f0a0015;
+        public static final int three_meters=0x7f0a0044;
+        public static final int thursday=0x7f0a0035;
+        public static final int timer=0x7f0a003d;
+        public static final int title_activity_alarm_screen_math=0x7f0a0049;
+        public static final int title_activity_alarm_screen_wakeathon=0x7f0a004d;
+        public static final int title_activity_alarm_screen_word=0x7f0a004c;
+        public static final int title_activity_settings=0x7f0a004e;
+        public static final int tuesday=0x7f0a0033;
+        public static final int untitled=0x7f0a0025;
+        public static final int update_alarm_success=0x7f0a002e;
+        public static final int wake_up=0x7f0a0040;
+        public static final int wakeathon=0x7f0a0018;
+        /**  AlarmScreenWakeathon 
+         */
+        public static final int walk=0x7f0a003f;
+        public static final int walk_start=0x7f0a0043;
+        public static final int wednesday=0x7f0a0034;
+        public static final int word=0x7f0a0017;
     }
     public static final class style {
         /** 

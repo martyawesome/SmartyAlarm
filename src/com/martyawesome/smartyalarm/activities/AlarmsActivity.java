@@ -1,7 +1,6 @@
 package com.martyawesome.smartyalarm.activities;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.NotificationManager;
@@ -22,6 +21,7 @@ import android.widget.TextView;
 
 import com.martyawesome.smartyalarm.AlarmConstants;
 import com.martyawesome.smartyalarm.AlarmObject;
+import com.martyawesome.smartyalarm.ChallengeObject;
 import com.martyawesome.smartyalarm.R;
 import com.martyawesome.smartyalarm.adapters.AlarmListAdapter;
 import com.martyawesome.smartyalarm.database.AlarmDBHelper;
@@ -41,6 +41,9 @@ public class AlarmsActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_alarms);
 		mContext = this;
+		
+		if(!(dbHelper.getMaxId(AlarmConstants.TABLE_NAME_CHALLENGES) > 0))
+			initializeChallenges();
 		
         int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
         TextView actionBarTitleView = (TextView) getWindow().findViewById(actionBarTitle);
@@ -75,6 +78,12 @@ public class AlarmsActivity extends ListActivity {
 		switch (item.getItemId()) {
 		case R.id.add_alarm: {
 			startAlarmDetailsActivity(0);
+			break;
+		}
+		case R.id.settings: {
+			Intent intent = new Intent(AlarmsActivity.this,
+					SettingsActivity.class);
+			startActivity(intent);
 			break;
 		}
 		}
@@ -120,7 +129,7 @@ public class AlarmsActivity extends ListActivity {
 						// Notify the adapter the data has changed
 						mAdapter.notifyDataSetChanged();
 
-						if (dbHelper.getMaxId() > 0) {
+						if (dbHelper.getMaxId(AlarmConstants.TABLE_NAME) > 0) {
 							// Set the alarms
 							AlarmManagerHelper.setAlarms(mContext);
 						}
@@ -204,5 +213,22 @@ public class AlarmsActivity extends ListActivity {
 			mNotificationManager.cancelAll();
 		}
 
+	}
+	
+	public void initializeChallenges(){
+		ChallengeObject[] listOfChallenges = new ChallengeObject[4];
+				
+		for(int i = 0; i<listOfChallenges.length; i++){
+			listOfChallenges[i] = new ChallengeObject();
+			listOfChallenges[i].isEnabled = true;
+			listOfChallenges[i].id = i + 1;
+		}
+		
+		listOfChallenges[0].name = getResources().getString(R.string.taptap);
+		listOfChallenges[1].name = getResources().getString(R.string.math);
+		listOfChallenges[2].name = getResources().getString(R.string.word);
+		listOfChallenges[3].name = getResources().getString(R.string.wakeathon);
+		
+		dbHelper.createChallenges(listOfChallenges);
 	}
 }

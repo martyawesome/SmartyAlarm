@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/textlines_with_border"
+    android:padding="@dimen/activity_horizontal_margin" >
+
+    <LinearLayout
+        android:id="@+id/alarm_details_wakeathon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_very_small_horizontal_margin" >
+
+        <TextView
+            android:id="@+id/alarm_screen_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_small_horizontal_margin"
+            android:text="@string/alarm"
+            android:textColor="@color/darkGray"
+            android:textSize="26sp" />
+
+        <TextView
+            android:id="@+id/alarm_screen_name_wakeathon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_very_small_horizontal_margin"
+            android:text="@string/initial_name"
+            android:textColor="@color/darkGray"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/alarm_screen_time_wakeathon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/initial_time"
+            android:textColor="@color/darkGray"
+            android:textSize="55sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/alarm_screen_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_details_wakeathon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center_horizontal"
+        android:text="@string/walk"
+        android:textColor="@color/darkGray"
+        android:textSize="35sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/alarm_screen_time_wakeathon_distance_remaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_screen_message"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center_horizontal"
+        android:text="@string/three_meters"
+        android:textColor="@color/darkGray"
+        android:textSize="25sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/alarm_screen_start_wakeathon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarm_details_wakeathon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@drawable/circle_med"
+        android:gravity="center"
+        android:padding="@dimen/activity_small_horizontal_margin"
+        android:text="@string/walk_start"
+        android:textColor="@android:color/white"
+        android:textSize="25sp" />
+
+    <ImageView
+        android:id="@+id/alarm_screen_shake_imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/alarm_details_wakeathon"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:src="@drawable/ic_rotate" />
+
+</RelativeLayout>
